@@ -1,0 +1,3 @@
+# Logs directory
+# Contains request logs from the API
+*.log

@@ -1,0 +1,1472 @@
+{
+    "customer": {
+        "fields": [
+            {
+                "name": "customerId",
+                "type": "customerId"
+            },
+            {
+                "name": "trackingNumber",
+                "type": "string"
+            },
+            {
+                "name": "customerUuid",
+                "type": "uuid"
+            },
+            {
+                "name": "customerShortName",
+                "type": "fullName"
+            },
+            {
+                "name": "accountStatus",
+                "type": "select",
+                "options": [
+                    "ACTIVE",
+                    "INACTIVE",
+                    "PENDING",
+                    "CLOSED"
+                ]
+            },
+            {
+                "name": "nidNo",
+                "type": "numericId"
+            },
+            {
+                "name": "idType",
+                "type": "select",
+                "options": [
+                    "NID",
+                    "PASSPORT",
+                    "DRIVING_LICENSE",
+                    "BIRTH_CERTIFICATE"
+                ]
+            },
+            {
+                "name": "dob",
+                "type": "date"
+            },
+            {
+                "name": "customerNameEng",
+                "type": "fullName"
+            },
+            {
+                "name": "customerNameBen",
+                "type": "fullName"
+            },
+            {
+                "name": "fatherNameEng",
+                "type": "fullName"
+            },
+            {
+                "name": "fatherNameBen",
+                "type": "fullName"
+            },
+            {
+                "name": "motherNameEng",
+                "type": "fullName"
+            },
+            {
+                "name": "motherNameBen",
+                "type": "fullName"
+            },
+            {
+                "name": "spouseNameEng",
+                "type": "fullName"
+            },
+            {
+                "name": "spouseNameBen",
+                "type": "fullName"
+            },
+            {
+                "name": "gender",
+                "type": "select",
+                "options": [
+                    "Male",
+                    "Female",
+                    "Other"
+                ]
+            },
+            {
+                "name": "presAddressEng",
+                "type": "address"
+            },
+            {
+                "name": "permAddressEng",
+                "type": "address"
+            },
+            {
+                "name": "profAddressEng",
+                "type": "address"
+            },
+            {
+                "name": "mailingAddress",
+                "type": "address"
+            },
+            {
+                "name": "tinNumber",
+                "type": "numericId"
+            },
+            {
+                "name": "etinNumber",
+                "type": "numericId"
+            },
+            {
+                "name": "profession",
+                "type": "jobTitle"
+            },
+            {
+                "name": "otherProfession",
+                "type": "string"
+            },
+            {
+                "name": "countryCode",
+                "type": "countryCode"
+            },
+            {
+                "name": "mobileNumber",
+                "type": "phone"
+            },
+            {
+                "name": "email",
+                "type": "email"
+            },
+            {
+                "name": "religion",
+                "type": "select",
+                "options": [
+                    "Islam",
+                    "Christianity",
+                    "Hinduism",
+                    "Buddhism",
+                    "Other"
+                ]
+            },
+            {
+                "name": "placeOfBirth",
+                "type": "city"
+            },
+            {
+                "name": "countryOfBirth",
+                "type": "country"
+            },
+            {
+                "name": "sourceOfFund",
+                "type": "select",
+                "options": [
+                    "Salary",
+                    "Business",
+                    "Investment",
+                    "Inheritance",
+                    "Gift",
+                    "Other"
+                ]
+            },
+            {
+                "name": "otherSourceOfFund",
+                "type": "string"
+            },
+            {
+                "name": "natureOfBusiness",
+                "type": "string"
+            },
+            {
+                "name": "nativeResident",
+                "type": "boolean"
+            },
+            {
+                "name": "residentialStatus",
+                "type": "select",
+                "options": [
+                    "RESIDENT",
+                    "NON_RESIDENT"
+                ]
+            },
+            {
+                "name": "transactionLimitMonthly",
+                "type": "currency"
+            },
+            {
+                "name": "nationality",
+                "type": "country"
+            },
+            {
+                "name": "monthlyIncome",
+                "type": "currency"
+            },
+            {
+                "name": "usResidency",
+                "type": "boolean"
+            },
+            {
+                "name": "usCitizenship",
+                "type": "boolean"
+            },
+            {
+                "name": "usAddress",
+                "type": "address"
+            },
+            {
+                "name": "usSocialSecurityNumber",
+                "type": "numericId"
+            },
+            {
+                "name": "customerType",
+                "type": "select",
+                "options": [
+                    "INDIVIDUAL",
+                    "CORPORATE",
+                    "JOINT"
+                ]
+            },
+            {
+                "name": "riskRating",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ]
+            },
+            {
+                "name": "verificationScores",
+                "type": "nestedObject",
+                "schema": "verificationScores"
+            },
+            {
+                "name": "screeningInfo",
+                "type": "nestedObject",
+                "schema": "screeningInfo"
+            },
+            {
+                "name": "transactionProfiles",
+                "type": "nestedArray",
+                "schema": "transactionProfile",
+                "minCount": 1,
+                "maxCount": 3
+            },
+            {
+                "name": "riskGrading",
+                "type": "nestedArray",
+                "schema": "riskGrading",
+                "minCount": 1,
+                "maxCount": 2
+            },
+            {
+                "name": "riskGradingScores",
+                "type": "nestedArray",
+                "schema": "riskGradingScore",
+                "minCount": 1,
+                "maxCount": 2
+            },
+            {
+                "name": "riskAssessments",
+                "type": "nestedArray",
+                "schema": "riskAssessment",
+                "minCount": 1,
+                "maxCount": 2
+            },
+            {
+                "name": "branchRelatedInfo",
+                "type": "nestedArray",
+                "schema": "branchRelatedInfo",
+                "minCount": 1,
+                "maxCount": 2
+            },
+            {
+                "name": "introducers",
+                "type": "nestedArray",
+                "schema": "introducer",
+                "minCount": 1,
+                "maxCount": 3
+            },
+            {
+                "name": "otherBanks",
+                "type": "nestedArray",
+                "schema": "otherBank",
+                "minCount": 1,
+                "maxCount": 3
+            },
+            {
+                "name": "otherBankCards",
+                "type": "nestedArray",
+                "schema": "otherBankCard",
+                "minCount": 1,
+                "maxCount": 3
+            },
+            {
+                "name": "otherInfo",
+                "type": "nestedArray",
+                "schema": "otherInfo",
+                "minCount": 1,
+                "maxCount": 3
+            }
+        ]
+    },
+    "account": {
+        "fields": [
+            {
+                "name": "customerId",
+                "type": "customerIdRef"
+            },
+            {
+                "name": "trackingNumber",
+                "type": "string"
+            },
+            {
+                "name": "uuid",
+                "type": "uuid"
+            },
+            {
+                "name": "accountNumber",
+                "type": "accountNumber"
+            },
+            {
+                "name": "uniqueAccountNumber",
+                "type": "accountNumber"
+            },
+            {
+                "name": "accountName",
+                "type": "fullName"
+            },
+            {
+                "name": "accountType",
+                "type": "select",
+                "options": [
+                    "SAVINGS",
+                    "CHECKING",
+                    "CURRENT",
+                    "FIXED_DEPOSIT",
+                    "CORPORATE"
+                ]
+            },
+            {
+                "name": "accountTypeBankside",
+                "type": "select",
+                "options": [
+                    "RETAIL",
+                    "CORPORATE",
+                    "PREMIUM"
+                ]
+            },
+            {
+                "name": "accountOperationType",
+                "type": "select",
+                "options": [
+                    "INDIVIDUAL",
+                    "JOINT",
+                    "CORPORATE"
+                ]
+            },
+            {
+                "name": "accountProfileType",
+                "type": "select",
+                "options": [
+                    "SIMPLIFIED",
+                    "STANDARD",
+                    "PREMIUM"
+                ]
+            },
+            {
+                "name": "branchCode",
+                "type": "string"
+            },
+            {
+                "name": "preferredBranchCode",
+                "type": "string"
+            },
+            {
+                "name": "onboardingType",
+                "type": "select",
+                "options": [
+                    "ONLINE",
+                    "BRANCH",
+                    "MOBILE_APP",
+                    "AGENT"
+                ]
+            },
+            {
+                "name": "purposeOfAccountOpening",
+                "type": "sentence"
+            },
+            {
+                "name": "transactionAmountMonthly",
+                "type": "currency"
+            },
+            {
+                "name": "accountRemarks",
+                "type": "sentence"
+            },
+            {
+                "name": "initialDeposit",
+                "type": "number"
+            },
+            {
+                "name": "initialDepositText",
+                "type": "currency"
+            },
+            {
+                "name": "preferredCurrency",
+                "type": "currencyCode"
+            },
+            {
+                "name": "jointModeOfOperation",
+                "type": "select",
+                "options": [
+                    "EITHER",
+                    "ANY",
+                    "ALL",
+                    "SURVIVOR"
+                ]
+            },
+            {
+                "name": "jointSignatory",
+                "type": "string"
+            },
+            {
+                "name": "jointSignatoryOther",
+                "type": "string"
+            },
+            {
+                "name": "jointNumberOfApplicants",
+                "type": "number"
+            },
+            {
+                "name": "jointAccountTitleEng",
+                "type": "string"
+            },
+            {
+                "name": "jointAccountTitleBen",
+                "type": "string"
+            },
+            {
+                "name": "jointSecondApplicantId",
+                "type": "string"
+            },
+            {
+                "name": "jointThirdApplicantId",
+                "type": "string"
+            },
+            {
+                "name": "jointFourthApplicantId",
+                "type": "string"
+            },
+            {
+                "name": "jointFifthApplicantId",
+                "type": "string"
+            },
+            {
+                "name": "additionalServicesId",
+                "type": "string"
+            },
+            {
+                "name": "approvalStatus",
+                "type": "select",
+                "options": [
+                    "PENDING",
+                    "APPROVED",
+                    "REJECTED",
+                    "UNDER_REVIEW"
+                ]
+            },
+            {
+                "name": "approvalStatusName",
+                "type": "string"
+            },
+            {
+                "name": "approvalRemarks",
+                "type": "sentence"
+            },
+            {
+                "name": "createdOn",
+                "type": "datetime"
+            },
+            {
+                "name": "submittedOn",
+                "type": "datetime"
+            },
+            {
+                "name": "updatedOn",
+                "type": "datetime"
+            },
+            {
+                "name": "nominees",
+                "type": "nestedArray",
+                "schema": "nominee",
+                "minCount": 1,
+                "maxCount": 3
+            }
+        ]
+    },
+    "transaction": {
+        "fields": [
+            {
+                "name": "reference",
+                "type": "uuid"
+            },
+            {
+                "name": "customerId",
+                "type": "customerIdRef"
+            },
+            {
+                "name": "accountId",
+                "type": "accountIdRef"
+            },
+            {
+                "name": "amount",
+                "type": "currency"
+            },
+            {
+                "name": "currency",
+                "type": "select",
+                "options": [
+                    "USD",
+                    "EUR",
+                    "GBP",
+                    "BDT",
+                    "INR",
+                    "JPY",
+                    "CNY"
+                ]
+            },
+            {
+                "name": "exchangeRate",
+                "type": "exchangeRate"
+            },
+            {
+                "name": "fees",
+                "type": "currency"
+            },
+            {
+                "name": "type",
+                "type": "select",
+                "options": [
+                    "Deposit",
+                    "Withdrawal",
+                    "Transfer",
+                    "Payment",
+                    "Remittance"
+                ]
+            },
+            {
+                "name": "direction",
+                "type": "select",
+                "options": [
+                    "Credit",
+                    "Debit"
+                ]
+            },
+            {
+                "name": "timestamp",
+                "type": "datetime"
+            },
+            {
+                "name": "sender",
+                "type": "fullName"
+            },
+            {
+                "name": "receiver",
+                "type": "fullName"
+            },
+            {
+                "name": "senderAccount",
+                "type": "accountNumber"
+            },
+            {
+                "name": "receiverAccount",
+                "type": "accountNumber"
+            },
+            {
+                "name": "senderCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "receiverCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "paymentMethod",
+                "type": "select",
+                "options": [
+                    "Cash",
+                    "Check",
+                    "Wire Transfer",
+                    "Card",
+                    "Mobile Banking",
+                    "Internet Banking"
+                ]
+            },
+            {
+                "name": "purpose",
+                "type": "sentence"
+            },
+            {
+                "name": "status",
+                "type": "select",
+                "options": [
+                    "Pending",
+                    "Completed",
+                    "Failed",
+                    "Cancelled"
+                ]
+            },
+            {
+                "name": "riskScore",
+                "type": "riskScore"
+            }
+        ]
+    },
+    "sanction": {
+        "fields": [
+            {
+                "name": "entityId",
+                "type": "uuid"
+            },
+            {
+                "name": "name",
+                "type": "customerNameFromPool"
+            },
+            {
+                "name": "caption",
+                "type": "customerNameFromPool"
+            },
+            {
+                "name": "aliases",
+                "type": "arrayOfNames",
+                "count": 3
+            },
+            {
+                "name": "dateOfBirth",
+                "type": "customerDobFromPool"
+            },
+            {
+                "name": "citizenships",
+                "type": "arrayOfCountries",
+                "count": 2
+            },
+            {
+                "name": "nationality",
+                "type": "arrayOfCountries",
+                "count": 2
+            },
+            {
+                "name": "countryCodes",
+                "type": "arrayOfCountryCodes",
+                "count": 2
+            },
+            {
+                "name": "organization",
+                "type": "companyName"
+            },
+            {
+                "name": "position",
+                "type": "jobTitle"
+            },
+            {
+                "name": "entityType",
+                "type": "select",
+                "options": [
+                    "Individual",
+                    "Organization",
+                    "Government",
+                    "Vessel"
+                ]
+            },
+            {
+                "name": "schema",
+                "type": "select",
+                "options": [
+                    "Person",
+                    "Company",
+                    "Organization",
+                    "PublicBody"
+                ]
+            },
+            {
+                "name": "datasets",
+                "type": "arrayOfStrings",
+                "count": 2
+            },
+            {
+                "name": "topics",
+                "type": "arrayOfStrings",
+                "count": 3
+            },
+            {
+                "name": "properties",
+                "type": "arrayOfStrings",
+                "count": 4
+            },
+            {
+                "name": "riskLevel",
+                "type": "select",
+                "options": [
+                    "Low",
+                    "Medium",
+                    "High",
+                    "Critical"
+                ]
+            },
+            {
+                "name": "firstSeen",
+                "type": "date"
+            },
+            {
+                "name": "lastSeen",
+                "type": "datetime"
+            },
+            {
+                "name": "lastChange",
+                "type": "datetime"
+            },
+            {
+                "name": "sourceUrl",
+                "type": "url"
+            },
+            {
+                "name": "searchText",
+                "type": "sentence"
+            }
+        ]
+    },
+    "verificationScores": {
+        "fields": [
+            {
+                "name": "customerNameEngScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "customerNameEngStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "customerNameBenScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "customerNameBenStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "fatherNameScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "fatherNameStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "motherNameScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "motherNameStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "spouseNameScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "spouseNameStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "presentAddressScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "presentAddressStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "customerPhotoCardScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "customerPhotoCardStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "customerPhotoAppScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "customerPhotoAppStatus",
+                "type": "select",
+                "options": [
+                    "VERIFIED",
+                    "PENDING",
+                    "FAILED"
+                ]
+            },
+            {
+                "name": "textualInfoMatchStatus",
+                "type": "select",
+                "options": [
+                    "MATCHED",
+                    "PARTIAL",
+                    "NOT_MATCHED"
+                ]
+            }
+        ]
+    },
+    "screeningInfo": {
+        "fields": [
+            {
+                "name": "isPep",
+                "type": "boolean"
+            },
+            {
+                "name": "pepCheckStatus",
+                "type": "select",
+                "options": [
+                    "CLEAR",
+                    "HIT",
+                    "PENDING",
+                    "REVIEW"
+                ]
+            }
+        ]
+    },
+    "transactionProfile": {
+        "fields": [
+            {
+                "name": "transactionChannelIndex",
+                "type": "number"
+            },
+            {
+                "name": "transactionChannel",
+                "type": "select",
+                "options": [
+                    "ATM",
+                    "BRANCH",
+                    "ONLINE",
+                    "MOBILE",
+                    "POS"
+                ]
+            },
+            {
+                "name": "transactionDepositNumber",
+                "type": "number"
+            },
+            {
+                "name": "transactionDepositAmount",
+                "type": "currency"
+            },
+            {
+                "name": "transactionDepositAmountPerMax",
+                "type": "currency"
+            },
+            {
+                "name": "transactionWithdrawNumber",
+                "type": "number"
+            },
+            {
+                "name": "transactionWithdrawAmount",
+                "type": "currency"
+            },
+            {
+                "name": "transactionWithdrawAmountPerMax",
+                "type": "currency"
+            }
+        ]
+    },
+    "riskGrading": {
+        "fields": [
+            {
+                "name": "riskGradingTypeOfOnboarding",
+                "type": "select",
+                "options": [
+                    "ONLINE",
+                    "BRANCH",
+                    "MOBILE",
+                    "AGENT"
+                ]
+            },
+            {
+                "name": "riskGradingGeographicRisk",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ]
+            },
+            {
+                "name": "riskGradingIsPep",
+                "type": "boolean"
+            },
+            {
+                "name": "riskGradingIsIp",
+                "type": "boolean"
+            },
+            {
+                "name": "riskGradingIsPepFamily",
+                "type": "boolean"
+            },
+            {
+                "name": "riskGradingProductAndChannelRisk",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ]
+            },
+            {
+                "name": "riskGradingBusinessAndActivityRisk",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ]
+            },
+            {
+                "name": "riskGradingProfessionAndActivityRisk",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ]
+            },
+            {
+                "name": "riskGradingBusinessOrProfession",
+                "type": "select",
+                "options": [
+                    "BUSINESS",
+                    "PROFESSION",
+                    "BOTH"
+                ]
+            },
+            {
+                "name": "riskGradingTransactionRisk",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ]
+            },
+            {
+                "name": "riskGradingCredibleSourceOfFund",
+                "type": "boolean"
+            },
+            {
+                "name": "riskGradingClientCitizenshipUst",
+                "type": "boolean"
+            },
+            {
+                "name": "riskGradingDonatesToPep",
+                "type": "boolean"
+            }
+        ]
+    },
+    "riskGradingScore": {
+        "fields": [
+            {
+                "name": "riskGradingScoreTypeOfOnboarding",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreGeographicRisk",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreIsPep",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreIsIp",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreIsPepFamily",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreProductAndChannelRisk",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreBusinessAndActivityRisk",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreProfessionAndActivityRisk",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreTransactionRisk",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreCredibleSourceOfFund",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreClientCitizenshipUst",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreDonatesToPep",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskGradingScoreAssessmentType",
+                "type": "select",
+                "options": [
+                    "INITIAL",
+                    "PERIODIC",
+                    "EVENT_DRIVEN"
+                ]
+            }
+        ]
+    },
+    "riskAssessment": {
+        "fields": [
+            {
+                "name": "riskAssessmentUnscrsCheckDone",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentIsPep",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentPepDetails",
+                "type": "sentence"
+            },
+            {
+                "name": "riskAssessmentAdverseMedia",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentBeneficialOwnerChecked",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentRiskGradingDone",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentOtherDocObtained",
+                "type": "sentence"
+            },
+            {
+                "name": "riskAssessmentRiskType",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH",
+                    "CRITICAL"
+                ]
+            },
+            {
+                "name": "riskAssessmentRiskScore",
+                "type": "riskScore"
+            },
+            {
+                "name": "riskAssessmentSofVerified",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentReviewOfProfileDone",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentReviewOfProfileDate",
+                "type": "date"
+            },
+            {
+                "name": "riskAssessmentDepositHistory",
+                "type": "number"
+            },
+            {
+                "name": "riskAssessmentWithdrawHistory",
+                "type": "number"
+            },
+            {
+                "name": "riskAssessmentIsTransactionPatternUsual",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentPepApproval",
+                "type": "boolean"
+            },
+            {
+                "name": "riskAssessmentPepFaceToFaceInterview",
+                "type": "boolean"
+            }
+        ]
+    },
+    "branchRelatedInfo": {
+        "fields": [
+            {
+                "name": "branchRelatedCompletedAof",
+                "type": "boolean"
+            },
+            {
+                "name": "branchRelatedWlcFalsePositive",
+                "type": "boolean"
+            },
+            {
+                "name": "branchRelatedWlcPositive",
+                "type": "boolean"
+            },
+            {
+                "name": "branchRelatedWlcChecked",
+                "type": "boolean"
+            },
+            {
+                "name": "branchRelatedMarketedByOfficial",
+                "type": "boolean"
+            },
+            {
+                "name": "branchRelatedMarketedByDsa",
+                "type": "boolean"
+            },
+            {
+                "name": "branchRelatedSectorCode",
+                "type": "string"
+            },
+            {
+                "name": "branchRelatedOfficialDsaName",
+                "type": "fullName"
+            },
+            {
+                "name": "branchRelatedEmployeeDsaCode",
+                "type": "string"
+            },
+            {
+                "name": "branchRelatedAccOpeningOfficerName",
+                "type": "fullName"
+            },
+            {
+                "name": "branchRelatedAccOpeningApproachByName",
+                "type": "fullName"
+            },
+            {
+                "name": "branchRelatedAccOpeningOfficerEid",
+                "type": "string"
+            },
+            {
+                "name": "branchRelatedAccOpeningApproachByEid",
+                "type": "string"
+            },
+            {
+                "name": "branchRelatedAddressVerified",
+                "type": "boolean"
+            },
+            {
+                "name": "branchRelatedAddressVerificationMethod",
+                "type": "select",
+                "options": [
+                    "PHYSICAL_VISIT",
+                    "UTILITY_BILL",
+                    "BANK_STATEMENT",
+                    "OTHER"
+                ]
+            },
+            {
+                "name": "branchRelatedAddressVerifierName",
+                "type": "fullName"
+            },
+            {
+                "name": "branchRelatedAddressVerifierEid",
+                "type": "string"
+            },
+            {
+                "name": "branchRelatedCertifyingOfficerName",
+                "type": "fullName"
+            },
+            {
+                "name": "branchRelatedCertifyingOfficerEid",
+                "type": "string"
+            }
+        ]
+    },
+    "introducer": {
+        "fields": [
+            {
+                "name": "introducerName",
+                "type": "fullName"
+            },
+            {
+                "name": "introducerDob",
+                "type": "date"
+            },
+            {
+                "name": "introducerMobileNo",
+                "type": "phone"
+            },
+            {
+                "name": "introducerAccountNo",
+                "type": "accountNumber"
+            },
+            {
+                "name": "introducerIdType",
+                "type": "select",
+                "options": [
+                    "NID",
+                    "PASSPORT",
+                    "DRIVING_LICENSE"
+                ]
+            },
+            {
+                "name": "introducerIdNumber",
+                "type": "numericId"
+            }
+        ]
+    },
+    "otherBank": {
+        "fields": [
+            {
+                "name": "otherBankIndex",
+                "type": "number"
+            },
+            {
+                "name": "otherBankName",
+                "type": "companyName"
+            },
+            {
+                "name": "otherBankBranch",
+                "type": "string"
+            },
+            {
+                "name": "otherBankAccountNumber",
+                "type": "accountNumber"
+            }
+        ]
+    },
+    "otherBankCard": {
+        "fields": [
+            {
+                "name": "otherBankCardIndex",
+                "type": "number"
+            },
+            {
+                "name": "otherBankCardName",
+                "type": "string"
+            },
+            {
+                "name": "otherBankCardNumber",
+                "type": "string"
+            }
+        ]
+    },
+    "otherInfo": {
+        "fields": [
+            {
+                "name": "infoKey",
+                "type": "string"
+            },
+            {
+                "name": "infoValue",
+                "type": "sentence"
+            }
+        ]
+    },
+    "nominee": {
+        "fields": [
+            {
+                "name": "nomineeIndex",
+                "type": "number"
+            },
+            {
+                "name": "nomineeNameEng",
+                "type": "fullName"
+            },
+            {
+                "name": "nomineeNameBen",
+                "type": "fullName"
+            },
+            {
+                "name": "nomineeEmail",
+                "type": "email"
+            },
+            {
+                "name": "nomineeMobileNo",
+                "type": "phone"
+            },
+            {
+                "name": "nomineeDob",
+                "type": "date"
+            },
+            {
+                "name": "nomineeRelation",
+                "type": "select",
+                "options": [
+                    "SPOUSE",
+                    "CHILD",
+                    "PARENT",
+                    "SIBLING",
+                    "OTHER"
+                ]
+            },
+            {
+                "name": "nomineePresAddressEng",
+                "type": "address"
+            },
+            {
+                "name": "nomineePermAddressEng",
+                "type": "address"
+            },
+            {
+                "name": "nomineePresAddressBen",
+                "type": "address"
+            },
+            {
+                "name": "nomineePermAddressBen",
+                "type": "address"
+            },
+            {
+                "name": "nomineeSharePercentage",
+                "type": "string"
+            },
+            {
+                "name": "nomineeIdType",
+                "type": "select",
+                "options": [
+                    "NID",
+                    "PASSPORT",
+                    "BIRTH_CERTIFICATE"
+                ]
+            },
+            {
+                "name": "nomineeIdNumber",
+                "type": "numericId"
+            },
+            {
+                "name": "nomineeIdFrontImage",
+                "type": "url"
+            },
+            {
+                "name": "nomineeIdBackImage",
+                "type": "url"
+            },
+            {
+                "name": "nomineePhotoImage",
+                "type": "url"
+            },
+            {
+                "name": "nomineeOtherIdImage",
+                "type": "url"
+            },
+            {
+                "name": "nomineeTinNumber",
+                "type": "numericId"
+            },
+            {
+                "name": "nomineeAccountNumber",
+                "type": "accountNumber"
+            },
+            {
+                "name": "nomineeMinor",
+                "type": "boolean"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianName",
+                "type": "fullName"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianDob",
+                "type": "date"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianPresAddressEng",
+                "type": "address"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianPresAddressBen",
+                "type": "address"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianPermAddressEng",
+                "type": "address"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianPermAddressBen",
+                "type": "address"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianRelation",
+                "type": "select",
+                "options": [
+                    "PARENT",
+                    "GUARDIAN",
+                    "OTHER"
+                ]
+            },
+            {
+                "name": "nomineeMinorLegalGuardianContactNo",
+                "type": "phone"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianIdType",
+                "type": "select",
+                "options": [
+                    "NID",
+                    "PASSPORT"
+                ]
+            },
+            {
+                "name": "nomineeMinorLegalGuardianPhotoImage",
+                "type": "url"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianIdFrontImage",
+                "type": "url"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianIdBackImage",
+                "type": "url"
+            },
+            {
+                "name": "nomineeMinorLegalGuardianIdNumber",
+                "type": "numericId"
+            }
+        ]
+    }
+}
