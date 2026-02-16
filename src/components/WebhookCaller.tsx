@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Send, Loader2, CheckCircle, XCircle, Clock, Activity } from 'lucide-react';
 
 interface WebhookResponse {
@@ -14,9 +15,10 @@ interface WebhookResponse {
 }
 
 export default function WebhookCaller() {
+    const router = useRouter();
     const [webhookUrl, setWebhookUrl] = useState('');
     const [token, setToken] = useState('');
-    const [dataType, setDataType] = useState<'customer' | 'account' | 'transaction' | 'sanction'>('customer');
+    const [dataType, setDataType] = useState<'customer' | 'account' | 'transaction' | 'sanction' | 'trade'>('customer');
     const [amount, setAmount] = useState(1);
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState<WebhookResponse | null>(null);
@@ -42,6 +44,7 @@ export default function WebhookCaller() {
                 }),
             });
 
+            if (res.status === 401) { router.replace('/login'); return; }
             const data = await res.json();
             setResponse(data);
         } catch (error: any) {
@@ -120,6 +123,7 @@ export default function WebhookCaller() {
                                 <option value="account">Account</option>
                                 <option value="transaction">Transaction</option>
                                 <option value="sanction">Sanction</option>
+                                <option value="trade">Trade (LC)</option>
                             </select>
                         </div>
 

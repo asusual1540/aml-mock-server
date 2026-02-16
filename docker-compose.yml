@@ -1,0 +1,14 @@
+services:
+  aml-mock-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aml-mock-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped

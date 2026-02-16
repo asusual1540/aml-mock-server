@@ -1468,5 +1468,891 @@
                 "type": "numericId"
             }
         ]
+    },
+    "trade": {
+        "fields": [
+            {
+                "name": "lcNumber",
+                "type": "lcNumber"
+            },
+            {
+                "name": "swiftReference",
+                "type": "swiftReference"
+            },
+            {
+                "name": "lcType",
+                "type": "select",
+                "options": [
+                    "IMPORT",
+                    "EXPORT",
+                    "BACK_TO_BACK",
+                    "STANDBY",
+                    "TRANSFERABLE",
+                    "DOMESTIC",
+                    "DOCUMENTARY_COLLECTION"
+                ]
+            },
+            {
+                "name": "status",
+                "type": "select",
+                "options": [
+                    "DRAFT",
+                    "PENDING_AUTHORIZATION",
+                    "AUTHORIZED",
+                    "OPENED",
+                    "ADVISED",
+                    "ACCEPTED",
+                    "DOCUMENTS_RECEIVED",
+                    "DISCREPANCY",
+                    "UTILIZED",
+                    "EXPIRED",
+                    "CANCELLED",
+                    "CLOSED",
+                    "AMENDED",
+                    "SUSPENDED"
+                ]
+            },
+            {
+                "name": "issueDate",
+                "type": "date"
+            },
+            {
+                "name": "expiryDate",
+                "type": "futureDate"
+            },
+            {
+                "name": "lastShipmentDate",
+                "type": "futureDate"
+            },
+            {
+                "name": "latestDocPresentationDate",
+                "type": "futureDate"
+            },
+            {
+                "name": "currency",
+                "type": "select",
+                "options": [
+                    "USD",
+                    "EUR",
+                    "GBP",
+                    "JPY",
+                    "BDT",
+                    "CNY",
+                    "SGD",
+                    "AED",
+                    "INR",
+                    "CHF"
+                ]
+            },
+            {
+                "name": "amount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "tolerancePercent",
+                "type": "percentage"
+            },
+            {
+                "name": "utilizedAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "balanceAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "paymentTerms",
+                "type": "select",
+                "options": [
+                    "AT_SIGHT",
+                    "USANCE",
+                    "DEFERRED_PAYMENT",
+                    "ACCEPTANCE",
+                    "NEGOTIATION",
+                    "MIXED_PAYMENT",
+                    "RED_CLAUSE",
+                    "GREEN_CLAUSE"
+                ]
+            },
+            {
+                "name": "tenorDays",
+                "type": "number"
+            },
+            {
+                "name": "applicantName",
+                "type": "companyName"
+            },
+            {
+                "name": "applicantAddress",
+                "type": "address"
+            },
+            {
+                "name": "applicantCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "applicantAccount",
+                "type": "accountNumber"
+            },
+            {
+                "name": "beneficiaryName",
+                "type": "companyName"
+            },
+            {
+                "name": "beneficiaryAddress",
+                "type": "address"
+            },
+            {
+                "name": "beneficiaryCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "beneficiaryBank",
+                "type": "companyName"
+            },
+            {
+                "name": "beneficiaryBankSwift",
+                "type": "swiftCode"
+            },
+            {
+                "name": "issuingBankName",
+                "type": "companyName"
+            },
+            {
+                "name": "issuingBankSwift",
+                "type": "swiftCode"
+            },
+            {
+                "name": "advisingBankName",
+                "type": "companyName"
+            },
+            {
+                "name": "advisingBankSwift",
+                "type": "swiftCode"
+            },
+            {
+                "name": "confirmingBankName",
+                "type": "companyName"
+            },
+            {
+                "name": "goodsDescription",
+                "type": "sentence"
+            },
+            {
+                "name": "hsCode",
+                "type": "hsCode"
+            },
+            {
+                "name": "quantity",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "quantityUnit",
+                "type": "select",
+                "options": [
+                    "KG",
+                    "MT",
+                    "PCS",
+                    "CBM",
+                    "LBS",
+                    "CARTONS",
+                    "BAGS",
+                    "DRUMS",
+                    "ROLLS",
+                    "SETS"
+                ]
+            },
+            {
+                "name": "unitPrice",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "shipmentMode",
+                "type": "select",
+                "options": [
+                    "SEA",
+                    "AIR",
+                    "LAND",
+                    "RAIL",
+                    "COURIER",
+                    "MULTIMODAL"
+                ]
+            },
+            {
+                "name": "portOfLoading",
+                "type": "port"
+            },
+            {
+                "name": "portOfDischarge",
+                "type": "port"
+            },
+            {
+                "name": "originCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "destinationCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "transshipmentAllowed",
+                "type": "boolean"
+            },
+            {
+                "name": "partialShipmentAllowed",
+                "type": "boolean"
+            },
+            {
+                "name": "incoterms",
+                "type": "select",
+                "options": [
+                    "FOB",
+                    "CFR",
+                    "CIF",
+                    "EXW",
+                    "FCA",
+                    "CPT",
+                    "CIP",
+                    "DAP",
+                    "DPU",
+                    "DDP"
+                ]
+            },
+            {
+                "name": "insuranceRequired",
+                "type": "boolean"
+            },
+            {
+                "name": "insuranceAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "transferableLc",
+                "type": "boolean"
+            },
+            {
+                "name": "paymentToThirdParty",
+                "type": "boolean"
+            },
+            {
+                "name": "paymentCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "collateralAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "contractReference",
+                "type": "string"
+            },
+            {
+                "name": "riskRating",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH",
+                    "CRITICAL"
+                ]
+            },
+            {
+                "name": "sanctionScreened",
+                "type": "boolean"
+            },
+            {
+                "name": "dualUseGoodsFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "highRiskCountryFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "priceAnomalyFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "amendments",
+                "type": "nestedArray",
+                "schema": "tradeAmendment",
+                "minCount": 0,
+                "maxCount": 3
+            },
+            {
+                "name": "invoices",
+                "type": "nestedArray",
+                "schema": "tradeInvoice",
+                "minCount": 1,
+                "maxCount": 3
+            },
+            {
+                "name": "shipments",
+                "type": "nestedArray",
+                "schema": "tradeShipment",
+                "minCount": 1,
+                "maxCount": 2
+            },
+            {
+                "name": "parties",
+                "type": "nestedArray",
+                "schema": "tradeParty",
+                "minCount": 2,
+                "maxCount": 6
+            },
+            {
+                "name": "documents",
+                "type": "nestedArray",
+                "schema": "tradeDocument",
+                "minCount": 1,
+                "maxCount": 5
+            }
+        ]
+    },
+    "tradeAmendment": {
+        "fields": [
+            {
+                "name": "amendmentNumber",
+                "type": "number"
+            },
+            {
+                "name": "swiftReference",
+                "type": "swiftReference"
+            },
+            {
+                "name": "amendmentDate",
+                "type": "date"
+            },
+            {
+                "name": "amendmentType",
+                "type": "select",
+                "options": [
+                    "AMOUNT",
+                    "EXPIRY",
+                    "SHIPMENT",
+                    "BENEFICIARY",
+                    "DOCUMENTS",
+                    "TERMS",
+                    "GOODS",
+                    "TOLERANCE"
+                ]
+            },
+            {
+                "name": "amountChange",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "oldAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "newAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "oldExpiryDate",
+                "type": "date"
+            },
+            {
+                "name": "newExpiryDate",
+                "type": "futureDate"
+            },
+            {
+                "name": "reason",
+                "type": "sentence"
+            },
+            {
+                "name": "requestedBy",
+                "type": "companyName"
+            },
+            {
+                "name": "frequentAmendmentFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "suspiciousChangeFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "status",
+                "type": "select",
+                "options": [
+                    "PENDING",
+                    "APPROVED",
+                    "REJECTED"
+                ]
+            }
+        ]
+    },
+    "tradeInvoice": {
+        "fields": [
+            {
+                "name": "invoiceNumber",
+                "type": "string"
+            },
+            {
+                "name": "invoiceDate",
+                "type": "date"
+            },
+            {
+                "name": "sellerName",
+                "type": "companyName"
+            },
+            {
+                "name": "sellerAddress",
+                "type": "address"
+            },
+            {
+                "name": "sellerCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "buyerName",
+                "type": "companyName"
+            },
+            {
+                "name": "buyerAddress",
+                "type": "address"
+            },
+            {
+                "name": "buyerCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "currency",
+                "type": "currencyCode"
+            },
+            {
+                "name": "totalAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "taxAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "freightAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "insuranceAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "discountAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "netAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "goodsDescription",
+                "type": "sentence"
+            },
+            {
+                "name": "hsCode",
+                "type": "hsCode"
+            },
+            {
+                "name": "quantity",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "quantityUnit",
+                "type": "select",
+                "options": [
+                    "KG",
+                    "MT",
+                    "PCS",
+                    "CBM",
+                    "LBS",
+                    "CARTONS",
+                    "BAGS",
+                    "DRUMS",
+                    "ROLLS",
+                    "SETS"
+                ]
+            },
+            {
+                "name": "unitPrice",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "incoterms",
+                "type": "select",
+                "options": [
+                    "FOB",
+                    "CFR",
+                    "CIF",
+                    "EXW",
+                    "FCA",
+                    "CPT",
+                    "CIP",
+                    "DAP",
+                    "DPU",
+                    "DDP"
+                ]
+            },
+            {
+                "name": "marketPriceRef",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "priceDeviation",
+                "type": "percentage"
+            },
+            {
+                "name": "overInvoicingFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "underInvoicingFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "priceAnomalyScore",
+                "type": "percentage"
+            },
+            {
+                "name": "documentsReceived",
+                "type": "boolean"
+            },
+            {
+                "name": "documentsVerified",
+                "type": "boolean"
+            },
+            {
+                "name": "discrepancyFound",
+                "type": "boolean"
+            },
+            {
+                "name": "discrepancyDetails",
+                "type": "sentence"
+            },
+            {
+                "name": "sanctionScreened",
+                "type": "boolean"
+            },
+            {
+                "name": "complianceCleared",
+                "type": "boolean"
+            }
+        ]
+    },
+    "tradeShipment": {
+        "fields": [
+            {
+                "name": "shipmentNumber",
+                "type": "string"
+            },
+            {
+                "name": "blNumber",
+                "type": "string"
+            },
+            {
+                "name": "awbNumber",
+                "type": "string"
+            },
+            {
+                "name": "shipmentDate",
+                "type": "date"
+            },
+            {
+                "name": "estimatedArrival",
+                "type": "futureDate"
+            },
+            {
+                "name": "actualArrival",
+                "type": "dateOrNull"
+            },
+            {
+                "name": "shipmentMode",
+                "type": "select",
+                "options": [
+                    "SEA",
+                    "AIR",
+                    "LAND",
+                    "RAIL",
+                    "COURIER",
+                    "MULTIMODAL"
+                ]
+            },
+            {
+                "name": "vesselName",
+                "type": "string"
+            },
+            {
+                "name": "vesselImo",
+                "type": "numericId"
+            },
+            {
+                "name": "vesselFlag",
+                "type": "countryCode"
+            },
+            {
+                "name": "voyageNumber",
+                "type": "string"
+            },
+            {
+                "name": "portOfLoading",
+                "type": "port"
+            },
+            {
+                "name": "portOfDischarge",
+                "type": "port"
+            },
+            {
+                "name": "transshipmentPort",
+                "type": "port"
+            },
+            {
+                "name": "originCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "destinationCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "goodsDescription",
+                "type": "sentence"
+            },
+            {
+                "name": "hsCode",
+                "type": "hsCode"
+            },
+            {
+                "name": "totalWeight",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "weightUnit",
+                "type": "select",
+                "options": [
+                    "KG",
+                    "MT"
+                ]
+            },
+            {
+                "name": "packageCount",
+                "type": "number"
+            },
+            {
+                "name": "containerNumbers",
+                "type": "arrayOfStrings",
+                "count": 3
+            },
+            {
+                "name": "highRiskPortFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "sanctionedPortFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "sanctionedVesselFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "circuitousRouteFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "vesselScreened",
+                "type": "boolean"
+            },
+            {
+                "name": "portsScreened",
+                "type": "boolean"
+            },
+            {
+                "name": "customsClearance",
+                "type": "boolean"
+            }
+        ]
+    },
+    "tradeParty": {
+        "fields": [
+            {
+                "name": "partyRole",
+                "type": "select",
+                "options": [
+                    "APPLICANT",
+                    "BENEFICIARY",
+                    "ISSUING_BANK",
+                    "ADVISING_BANK",
+                    "CONFIRMING_BANK",
+                    "NEGOTIATING_BANK",
+                    "REIMBURSING_BANK",
+                    "SHIPPING_COMPANY",
+                    "INSURANCE_COMPANY",
+                    "FREIGHT_FORWARDER",
+                    "BROKER",
+                    "NOTIFY_PARTY",
+                    "CONSIGNEE",
+                    "INSPECTION_AGENCY",
+                    "THIRD_PARTY_BENEFICIARY"
+                ]
+            },
+            {
+                "name": "partyType",
+                "type": "select",
+                "options": [
+                    "INDIVIDUAL",
+                    "ENTITY",
+                    "BANK"
+                ]
+            },
+            {
+                "name": "partyName",
+                "type": "companyName"
+            },
+            {
+                "name": "partyAddress",
+                "type": "address"
+            },
+            {
+                "name": "city",
+                "type": "city"
+            },
+            {
+                "name": "country",
+                "type": "countryCode"
+            },
+            {
+                "name": "registrationNumber",
+                "type": "numericId"
+            },
+            {
+                "name": "taxId",
+                "type": "numericId"
+            },
+            {
+                "name": "swiftCode",
+                "type": "swiftCode"
+            },
+            {
+                "name": "contactPerson",
+                "type": "fullName"
+            },
+            {
+                "name": "email",
+                "type": "email"
+            },
+            {
+                "name": "phone",
+                "type": "phone"
+            },
+            {
+                "name": "sanctionScreened",
+                "type": "boolean"
+            },
+            {
+                "name": "screeningResult",
+                "type": "select",
+                "options": [
+                    "CLEAR",
+                    "HIT",
+                    "POTENTIAL_MATCH"
+                ]
+            },
+            {
+                "name": "pepFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "adverseMediaFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "highRiskJurisdiction",
+                "type": "boolean"
+            },
+            {
+                "name": "riskRating",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH",
+                    "CRITICAL"
+                ]
+            }
+        ]
+    },
+    "tradeDocument": {
+        "fields": [
+            {
+                "name": "documentType",
+                "type": "select",
+                "options": [
+                    "LETTER_OF_CREDIT",
+                    "COMMERCIAL_INVOICE",
+                    "PACKING_LIST",
+                    "BILL_OF_LADING",
+                    "AIR_WAYBILL",
+                    "INSURANCE_CERTIFICATE",
+                    "CERTIFICATE_OF_ORIGIN",
+                    "INSPECTION_CERTIFICATE",
+                    "CUSTOMS_DECLARATION",
+                    "BANK_GUARANTEE",
+                    "SWIFT_MESSAGE",
+                    "OTHER"
+                ]
+            },
+            {
+                "name": "documentNumber",
+                "type": "string"
+            },
+            {
+                "name": "documentDate",
+                "type": "date"
+            },
+            {
+                "name": "description",
+                "type": "sentence"
+            },
+            {
+                "name": "issuerName",
+                "type": "companyName"
+            },
+            {
+                "name": "issuerCountry",
+                "type": "countryCode"
+            },
+            {
+                "name": "fileName",
+                "type": "string"
+            },
+            {
+                "name": "fileType",
+                "type": "select",
+                "options": [
+                    "PDF",
+                    "JPEG",
+                    "PNG",
+                    "TIFF",
+                    "DOCX"
+                ]
+            },
+            {
+                "name": "fileSize",
+                "type": "number"
+            },
+            {
+                "name": "verified",
+                "type": "boolean"
+            },
+            {
+                "name": "discrepancyFound",
+                "type": "boolean"
+            },
+            {
+                "name": "discrepancyNotes",
+                "type": "sentence"
+            }
+        ]
     }
 }

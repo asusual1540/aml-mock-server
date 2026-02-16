@@ -22,9 +22,9 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        if (!['customer', 'account', 'transaction', 'sanction'].includes(dataType)) {
+        if (!['customer', 'account', 'transaction', 'sanction', 'trade'].includes(dataType)) {
             return NextResponse.json(
-                { error: 'Invalid dataType. Must be customer, account, transaction, or sanction' },
+                { error: 'Invalid dataType. Must be customer, account, transaction, sanction, or trade' },
                 { status: 400 }
             );
         }
@@ -51,10 +51,15 @@ export async function POST(request: NextRequest) {
             console.log('[WEBHOOK] customerId field config:', customerIdField);
         }
 
+        const schema = schemas[dataType as keyof typeof schemas];
+        if (!schema) {
+            return NextResponse.json({ error: `No schema found for data type: ${dataType}` }, { status: 400 });
+        }
+
         const data = amountNum === 1
-            ? generateDataFromSchema(schemas[dataType as keyof typeof schemas], schemas)
+            ? generateDataFromSchema(schema, schemas)
             : Array.from({ length: amountNum }, () =>
-                generateDataFromSchema(schemas[dataType as keyof typeof schemas], schemas)
+                generateDataFromSchema(schema, schemas)
             );
 
         // Debug: Log generated data structure

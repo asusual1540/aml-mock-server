@@ -102,6 +102,7 @@ export interface Schemas {
     account: DataTypeSchema;
     transaction: DataTypeSchema;
     sanction: DataTypeSchema;
+    trade: DataTypeSchema;
     // Nested schemas referenced by customer/account
     verificationScores?: DataTypeSchema;
     screeningInfo?: DataTypeSchema;
@@ -115,6 +116,12 @@ export interface Schemas {
     otherBankCard?: DataTypeSchema;
     otherInfo?: DataTypeSchema;
     nominee?: DataTypeSchema;
+    // Nested schemas referenced by trade
+    tradeAmendment?: DataTypeSchema;
+    tradeInvoice?: DataTypeSchema;
+    tradeShipment?: DataTypeSchema;
+    tradeParty?: DataTypeSchema;
+    tradeDocument?: DataTypeSchema;
 }
 
 // Ensure config directory exists
@@ -442,6 +449,29 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
             return parseFloat(faker.finance.amount({ min: 0.5, max: 2.0, dec: 4 }));
         case 'accountNumber':
             return faker.finance.accountNumber();
+        case 'lcNumber':
+            return 'LC' + new Date().getFullYear() + faker.string.numeric(8);
+        case 'swiftReference':
+            return 'MT700' + faker.string.numeric(10);
+        case 'swiftCode':
+            return faker.string.alpha({ length: 4, casing: 'upper' }) +
+                faker.location.countryCode('alpha-2') +
+                faker.string.alphanumeric({ length: 2, casing: 'upper' }) +
+                faker.string.alphanumeric({ length: 3, casing: 'upper' });
+        case 'tradeAmount':
+            return parseFloat(faker.finance.amount({ min: 1000, max: 5000000, dec: 2 }));
+        case 'percentage':
+            return faker.number.float({ min: 0, max: 100, fractionDigits: 2 });
+        case 'hsCode': {
+            const hsCodes = ['8471.30', '6204.62', '8703.23', '2710.19', '8517.12', '8542.31', '0901.11', '5208.12', '7108.12', '3004.90'];
+            return faker.helpers.arrayElement(hsCodes);
+        }
+        case 'port': {
+            const ports = ['Shanghai', 'Singapore', 'Rotterdam', 'Antwerp', 'Hamburg', 'Los Angeles', 'Chittagong', 'Dubai', 'Hong Kong', 'Busan', 'Mumbai', 'Colombo', 'Felixstowe', 'Jeddah', 'Yokohama'];
+            return faker.helpers.arrayElement(ports);
+        }
+        case 'futureDate':
+            return faker.date.future({ years: 1 }).toISOString().split('T')[0];
         case 'word':
             return faker.lorem.word();
         case 'jobTitle':
@@ -544,4 +574,14 @@ export const AVAILABLE_FIELD_TYPES = [
     'arrayOfCountries',
     'arrayOfCountryCodes',
     'arrayOfNames',
+    'lcNumber',
+    'swiftReference',
+    'swiftCode',
+    'tradeAmount',
+    'percentage',
+    'hsCode',
+    'port',
+    'futureDate',
+    'nestedObject',
+    'nestedArray',
 ];
