@@ -4,7 +4,9 @@ import { getSchemas, generateDataFromSchema, addCustomersToPool, isCustomerIdPoo
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { webhookUrl, token, dataType, amount } = body;
+        const { webhookUrl, token, dataType, amount, customData } = body;
+
+        console.log('[WEBHOOK] Received request with body:', { webhookUrl, token, dataType, amount, hasCustomData: !!customData });
 
         // Validation
         if (!webhookUrl || !token || !dataType) {
@@ -22,9 +24,9 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        if (!['customer', 'account', 'transaction', 'sanction', 'trade'].includes(dataType)) {
+        if (!['customer', 'account', 'transaction', 'sanction', 'trade', 'credit'].includes(dataType)) {
             return NextResponse.json(
-                { error: 'Invalid dataType. Must be customer, account, transaction, sanction, or trade' },
+                { error: 'Invalid dataType. Must be customer, account, transaction, sanction, trade, or credit' },
                 { status: 400 }
             );
         }
@@ -51,16 +53,23 @@ export async function POST(request: NextRequest) {
             console.log('[WEBHOOK] customerId field config:', customerIdField);
         }
 
-        const schema = schemas[dataType as keyof typeof schemas];
-        if (!schema) {
-            return NextResponse.json({ error: `No schema found for data type: ${dataType}` }, { status: 400 });
-        }
+        // Use customData if provided (from View Data editor), otherwise generate
+        let data: any;
+        if (customData !== undefined && customData !== null) {
+            data = customData;
+            console.log('[WEBHOOK] Using custom data provided by user');
+        } else {
+            const schema = schemas[dataType as keyof typeof schemas];
+            if (!schema) {
+                return NextResponse.json({ error: `No schema found for data type: ${dataType}` }, { status: 400 });
+            }
 
-        const data = amountNum === 1
-            ? generateDataFromSchema(schema, schemas)
-            : Array.from({ length: amountNum }, () =>
-                generateDataFromSchema(schema, schemas)
-            );
+            data = amountNum === 1
+                ? generateDataFromSchema(schema, schemas)
+                : Array.from({ length: amountNum }, () =>
+                    generateDataFromSchema(schema, schemas)
+                );
+        }
 
         // Debug: Log generated data structure
         if (dataType === 'account') {
@@ -111,38 +120,79 @@ export async function POST(request: NextRequest) {
         const baseUrl = process.env.WEBHOOK_BASE_URL || 'http://localhost:9000';
         const fullUrl = `${baseUrl}${webhookUrl}`;
 
-        // Send to webhook
-        const startTime = Date.now();
-        const webhookResponse = await fetch(fullUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(data),
-        });
+        console.log('full url:', fullUrl);
 
-        const endTime = Date.now();
-        const responseTime = endTime - startTime;
+        // Send to webhook with retry logic
+        const MAX_RETRIES = 3;
+        const RETRY_DELAY_MS = 1000;
+        let lastError: Error | null = null;
 
-        const responseData = await webhookResponse.text();
-        let parsedResponse;
-        try {
-            parsedResponse = JSON.parse(responseData);
-        } catch {
-            parsedResponse = responseData;
+        for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+            try {
+                const startTime = Date.now();
+                const webhookResponse = await fetch(fullUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(data),
+                    signal: AbortSignal.timeout(30000), // 30s timeout
+                });
+
+                const endTime = Date.now();
+                const responseTime = endTime - startTime;
+
+                const responseData = await webhookResponse.text();
+                let parsedResponse;
+                try {
+                    parsedResponse = JSON.parse(responseData);
+                } catch {
+                    parsedResponse = responseData;
+                }
+
+                return NextResponse.json({
+                    success: webhookResponse.ok,
+                    statusCode: webhookResponse.status,
+                    statusText: webhookResponse.statusText,
+                    responseTime,
+                    response: parsedResponse,
+                    message: webhookResponse.ok
+                        ? `Successfully sent ${amountNum} ${dataType} record(s) to webhook`
+                        : `Webhook request failed with status ${webhookResponse.status}`,
+                });
+            } catch (fetchError: any) {
+                lastError = fetchError;
+                const causeMsg = fetchError?.cause?.message || fetchError?.cause?.code || '';
+                console.error(`[WEBHOOK] Attempt ${attempt}/${MAX_RETRIES} failed:`, fetchError.message, causeMsg);
+
+                if (attempt < MAX_RETRIES) {
+                    console.log(`[WEBHOOK] Retrying in ${RETRY_DELAY_MS}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS * attempt));
+                }
+            }
         }
 
-        return NextResponse.json({
-            success: webhookResponse.ok,
-            statusCode: webhookResponse.status,
-            statusText: webhookResponse.statusText,
-            responseTime,
-            response: parsedResponse,
-            message: webhookResponse.ok
-                ? `Successfully sent ${amountNum} ${dataType} record(s) to webhook`
-                : `Webhook request failed with status ${webhookResponse.status}`,
-        });
+        // All retries exhausted
+        const causeCode = (lastError as any)?.cause?.code || '';
+        const causeMessage = (lastError as any)?.cause?.message || '';
+        let hint = '';
+        if (causeCode === 'ECONNRESET' || causeCode === 'ECONNREFUSED') {
+            hint = ` Hint: The target server at ${fullUrl} is not reachable (${causeCode}). Ensure it is running and accessible.`;
+            if (fullUrl.includes('localhost')) {
+                hint += ' If running inside Docker, use host.docker.internal instead of localhost.';
+            }
+        }
+
+        return NextResponse.json(
+            {
+                success: false,
+                error: 'Failed to send webhook request after all retries',
+                message: `${lastError?.message || 'Unknown error'}. Cause: ${causeMessage || causeCode || 'unknown'}.${hint}`,
+                url: fullUrl,
+            },
+            { status: 502 }
+        );
 
     } catch (error: any) {
         console.error('Webhook call error:', error);

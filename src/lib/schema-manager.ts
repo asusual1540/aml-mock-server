@@ -2,6 +2,198 @@ import fs from 'fs';
 import path from 'path';
 import { faker } from '@faker-js/faker';
 
+// ═══════════════════════════════════════════════════════════════════
+// Bangladeshi (BD) & US locale data for 70/30 customer split
+// ═══════════════════════════════════════════════════════════════════
+
+const BD_MALE_FIRST_NAMES = [
+    'Mohammed', 'Abdul', 'Md', 'Sheikh', 'Rafiqul', 'Kamal', 'Jamal', 'Hasan', 'Hussain',
+    'Rahim', 'Rashid', 'Tariq', 'Zaman', 'Faruk', 'Salam', 'Habib', 'Nasir', 'Kabir',
+    'Murad', 'Ashraf', 'Iqbal', 'Monir', 'Shahid', 'Delwar', 'Masud', 'Nurul', 'Aminul',
+    'Shafiq', 'Mahfuz', 'Anis', 'Sumon', 'Shakil', 'Tanvir', 'Parvez', 'Zahid', 'Kamrul',
+    'Mizanur', 'Saiful', 'Jahangir', 'Khaled', 'Imran', 'Rashed', 'Sajjad', 'Arif',
+    'Mominul', 'Tawhid', 'Jubayer', 'Nayeem', 'Fahim', 'Mushfiq',
+];
+const BD_FEMALE_FIRST_NAMES = [
+    'Fatima', 'Aisha', 'Khadija', 'Nasima', 'Rahima', 'Sultana', 'Hasina', 'Shamima',
+    'Taslima', 'Momena', 'Rabeya', 'Salma', 'Nargis', 'Jahanara', 'Ruksana', 'Parveen',
+    'Shirin', 'Shahnaz', 'Rokeya', 'Rina', 'Lima', 'Tania', 'Nusrat', 'Farzana',
+    'Rehana', 'Rozina', 'Moushumi', 'Laila', 'Jesmin', 'Shapla', 'Nahar', 'Monira',
+    'Amina', 'Sadia', 'Jannatul', 'Shanta', 'Ruma', 'Sumaya', 'Tasnim', 'Maliha',
+];
+const BD_LAST_NAMES = [
+    'Rahman', 'Islam', 'Hossain', 'Ahmed', 'Khatun', 'Begum', 'Akter', 'Khan', 'Uddin',
+    'Ali', 'Miah', 'Chowdhury', 'Siddique', 'Hassan', 'Karim', 'Sheikh', 'Talukder',
+    'Sarker', 'Alam', 'Haque', 'Bhuiyan', 'Sultana', 'Mahmud', 'Jahan', 'Khandaker',
+    'Das', 'Roy', 'Barua', 'Mondal', 'Bhattacharjee',
+];
+
+// Bengali script names
+const BD_MALE_FIRST_NAMES_BEN = [
+    'মোহাম্মদ', 'আব্দুল', 'শেখ', 'রফিকুল', 'কামাল', 'জামাল', 'হাসান', 'হোসাইন',
+    'রহিম', 'রশিদ', 'তারিক', 'ফারুক', 'সালাম', 'হাবিব', 'নাসির', 'কবির',
+    'মুরাদ', 'আশরাফ', 'ইকবাল', 'মনির', 'শাহিদ', 'দেলোয়ার', 'মাসুদ', 'নুরুল',
+    'আমিনুল', 'শফিক', 'মাহফুজ', 'আনিস', 'সুমন', 'শাকিল', 'তানভীর', 'পারভেজ',
+    'জাহিদ', 'কামরুল', 'মিজানুর', 'সাইফুল', 'জাহাঙ্গীর', 'খালেদ', 'ইমরান', 'রাশেদ',
+];
+const BD_FEMALE_FIRST_NAMES_BEN = [
+    'ফাতিমা', 'আয়েশা', 'খাদিজা', 'নাসিমা', 'রহিমা', 'সুলতানা', 'হাসিনা', 'শামীমা',
+    'তাসলিমা', 'মোমেনা', 'রাবেয়া', 'সালমা', 'নার্গিস', 'জাহানারা', 'রুকসানা',
+    'পারভীন', 'শিরিন', 'শাহনাজ', 'রোকেয়া', 'রিনা', 'তানিয়া', 'নুসরাত', 'ফারজানা',
+    'রেহানা', 'রোজিনা', 'লাইলা', 'জেসমিন', 'শাপলা', 'নাহার', 'মনিরা', 'আমিনা',
+    'সাদিয়া', 'জান্নাতুল', 'শান্তা', 'রুমা', 'সুমাইয়া', 'তাসনিম', 'মালিহা',
+];
+const BD_LAST_NAMES_BEN = [
+    'রহমান', 'ইসলাম', 'হোসাইন', 'আহমেদ', 'খাতুন', 'বেগম', 'আক্তার', 'খান',
+    'উদ্দিন', 'আলী', 'মিয়া', 'চৌধুরী', 'সিদ্দিকী', 'হাসান', 'করিম', 'শেখ',
+    'তালুকদার', 'সরকার', 'আলম', 'হক', 'ভুইয়া', 'সুলতানা', 'মাহমুদ', 'জাহান', 'খন্দকার',
+];
+
+const BD_CITIES = [
+    'Dhaka', 'Chittagong', 'Rajshahi', 'Khulna', 'Sylhet', 'Rangpur', 'Barisal',
+    'Comilla', 'Gazipur', 'Narayanganj', 'Mymensingh', 'Bogra', "Cox's Bazar",
+    'Jessore', 'Dinajpur', 'Tangail', 'Brahmanbaria', 'Narsingdi', 'Savar', 'Tongi',
+];
+const BD_CITIES_BEN = [
+    'ঢাকা', 'চট্টগ্রাম', 'রাজশাহী', 'খুলনা', 'সিলেট', 'রংপুর', 'বরিশাল',
+    'কুমিল্লা', 'গাজীপুর', 'নারায়ণগঞ্জ', 'ময়মনসিংহ', 'বগুড়া', 'কক্সবাজার',
+    'যশোর', 'দিনাজপুর', 'টাঙ্গাইল', 'ব্রাহ্মণবাড়িয়া', 'নরসিংদী', 'সাভার', 'টঙ্গী',
+];
+const BD_AREAS = [
+    'Dhanmondi', 'Gulshan', 'Banani', 'Uttara', 'Mirpur', 'Mohammadpur', 'Motijheel',
+    'Panthapath', 'Farmgate', 'Kakrail', 'Wari', 'Lalbagh', 'Tejgaon', 'Badda',
+    'Rampura', 'Khilgaon', 'Basundhara', 'Nikunja', 'Baridhara', 'Shantinagar',
+];
+const BD_AREAS_BEN = [
+    'ধানমন্ডি', 'গুলশান', 'বনানী', 'উত্তরা', 'মিরপুর', 'মোহাম্মদপুর', 'মতিঝিল',
+    'পান্থপথ', 'ফার্মগেট', 'কাকরাইল', 'ওয়ারী', 'লালবাগ', 'তেজগাঁও', 'বাড্ডা',
+    'রামপুরা', 'খিলগাঁও', 'বসুন্ধরা', 'নিকুঞ্জ', 'বারিধারা', 'শান্তিনগর',
+];
+
+const BD_BANK_NAMES = [
+    'Sonali Bank', 'Janata Bank', 'Agrani Bank', 'Rupali Bank', 'Bangladesh Krishi Bank',
+    'Pubali Bank', 'Uttara Bank', 'National Bank', 'The City Bank', 'IFIC Bank',
+    'United Commercial Bank', 'Eastern Bank', 'BRAC Bank', 'Dutch-Bangla Bank',
+    'Prime Bank', 'Southeast Bank', 'Dhaka Bank', 'Islami Bank Bangladesh',
+    'AB Bank', 'NCC Bank', 'One Bank', 'Bank Asia', 'Trust Bank',
+    'Shahjalal Islami Bank', 'Exim Bank', 'Jamuna Bank', 'Standard Bank',
+    'Mercantile Bank', 'Mutual Trust Bank', 'First Security Islami Bank',
+];
+const US_BANK_NAMES = [
+    'JPMorgan Chase', 'Bank of America', 'Wells Fargo', 'Citibank', 'U.S. Bancorp',
+    'Truist Financial', 'TD Bank', 'PNC Financial', 'Capital One', 'Goldman Sachs',
+    'Morgan Stanley', 'Fifth Third Bank', 'Citizens Bank', 'KeyBank', 'Regions Bank',
+    'M&T Bank', 'Huntington Bank', 'Ally Financial', 'Synchrony Financial', 'Discover Financial',
+];
+
+// ═══════════════════════════════════════════════════════════════════
+// Locale-aware generation helpers
+// ═══════════════════════════════════════════════════════════════════
+
+function determineCountry(): 'BD' | 'US' {
+    return Math.random() < 0.7 ? 'BD' : 'US';
+}
+
+function generateBDFullName(): string {
+    const isMale = Math.random() > 0.5;
+    const firstName = faker.helpers.arrayElement(isMale ? BD_MALE_FIRST_NAMES : BD_FEMALE_FIRST_NAMES);
+    const lastName = faker.helpers.arrayElement(BD_LAST_NAMES);
+    return `${firstName} ${lastName}`;
+}
+
+function generateBDFullNameBen(): string {
+    const isMale = Math.random() > 0.5;
+    const firstName = faker.helpers.arrayElement(isMale ? BD_MALE_FIRST_NAMES_BEN : BD_FEMALE_FIRST_NAMES_BEN);
+    const lastName = faker.helpers.arrayElement(BD_LAST_NAMES_BEN);
+    return `${firstName} ${lastName}`;
+}
+
+function generateBDAddress(): string {
+    const houseNo = faker.number.int({ min: 1, max: 200 });
+    const roadNo = faker.number.int({ min: 1, max: 50 });
+    const area = faker.helpers.arrayElement(BD_AREAS);
+    const city = faker.helpers.arrayElement(BD_CITIES);
+    const postal = faker.number.int({ min: 1000, max: 9999 });
+    return `House #${houseNo}, Road #${roadNo}, ${area}, ${city} ${postal}`;
+}
+
+function generateBDAddressBen(): string {
+    const houseNo = faker.number.int({ min: 1, max: 200 });
+    const roadNo = faker.number.int({ min: 1, max: 50 });
+    const area = faker.helpers.arrayElement(BD_AREAS_BEN);
+    const city = faker.helpers.arrayElement(BD_CITIES_BEN);
+    const postal = faker.number.int({ min: 1000, max: 9999 });
+    return `বাড়ি #${houseNo}, রাস্তা #${roadNo}, ${area}, ${city} ${postal}`;
+}
+
+function generateBDPhone(): string {
+    const prefix = faker.helpers.arrayElement(['013', '014', '015', '016', '017', '018', '019']);
+    const number = faker.string.numeric(8);
+    return `+880${prefix}${number}`;
+}
+
+function generateLocaleFullName(country?: 'BD' | 'US', fieldName?: string): string {
+    if (country === 'BD') {
+        if (fieldName && fieldName.toLowerCase().endsWith('ben')) {
+            return generateBDFullNameBen();
+        }
+        return generateBDFullName();
+    }
+    // US or default
+    return faker.person.fullName();
+}
+
+function generateLocaleFirstName(country?: 'BD' | 'US'): string {
+    if (country === 'BD') {
+        const isMale = Math.random() > 0.5;
+        return faker.helpers.arrayElement(isMale ? BD_MALE_FIRST_NAMES : BD_FEMALE_FIRST_NAMES);
+    }
+    return faker.person.firstName();
+}
+
+function generateLocaleLastName(country?: 'BD' | 'US'): string {
+    if (country === 'BD') return faker.helpers.arrayElement(BD_LAST_NAMES);
+    return faker.person.lastName();
+}
+
+function generateLocaleAddress(country?: 'BD' | 'US', fieldName?: string): string {
+    if (country === 'BD') {
+        if (fieldName && fieldName.toLowerCase().endsWith('ben')) {
+            return generateBDAddressBen();
+        }
+        return generateBDAddress();
+    }
+    return faker.location.streetAddress();
+}
+
+function generateLocaleCity(country?: 'BD' | 'US'): string {
+    if (country === 'BD') return faker.helpers.arrayElement(BD_CITIES);
+    return faker.location.city();
+}
+
+function generateLocaleCountry(country?: 'BD' | 'US'): string {
+    if (country === 'BD') return 'Bangladesh';
+    if (country === 'US') return 'United States';
+    return faker.location.country();
+}
+
+function generateLocaleCountryCode(country?: 'BD' | 'US'): string {
+    if (country === 'BD') return 'BD';
+    if (country === 'US') return 'US';
+    return faker.location.countryCode('alpha-2');
+}
+
+function generateLocalePhone(country?: 'BD' | 'US'): string {
+    if (country === 'BD') return generateBDPhone();
+    return faker.phone.number();
+}
+
+function generateLocaleBankName(country?: 'BD' | 'US'): string {
+    if (country === 'BD') return faker.helpers.arrayElement(BD_BANK_NAMES);
+    if (country === 'US') return faker.helpers.arrayElement(US_BANK_NAMES);
+    return faker.helpers.arrayElement([...BD_BANK_NAMES, ...US_BANK_NAMES]);
+}
+
 const CONFIG_DIR = path.join(process.cwd(), 'config');
 const DEFAULT_SCHEMA_PATH = path.join(CONFIG_DIR, 'default-schemas.json');
 const USER_SCHEMA_PATH = path.join(CONFIG_DIR, 'schemas.json');
@@ -14,6 +206,7 @@ export interface CustomerPoolData {
     customerNameBen?: string;
     dateOfBirth?: string;
     nationality?: string;
+    country?: 'BD' | 'US';
 }
 
 // Customer pool for referencing in transactions and sanctions
@@ -91,6 +284,8 @@ export interface GenerationContext {
     customerId?: number | string;
     accountId?: string;
     accountNumber?: string;
+    country?: 'BD' | 'US';
+    selectedCustomer?: CustomerPoolData;
 }
 
 export interface DataTypeSchema {
@@ -103,6 +298,7 @@ export interface Schemas {
     transaction: DataTypeSchema;
     sanction: DataTypeSchema;
     trade: DataTypeSchema;
+    credit: DataTypeSchema;
     // Nested schemas referenced by customer/account
     verificationScores?: DataTypeSchema;
     screeningInfo?: DataTypeSchema;
@@ -122,6 +318,8 @@ export interface Schemas {
     tradeShipment?: DataTypeSchema;
     tradeParty?: DataTypeSchema;
     tradeDocument?: DataTypeSchema;
+    // Nested schemas referenced by credit
+    loanRepayment?: DataTypeSchema;
 }
 
 // Ensure config directory exists
@@ -161,6 +359,28 @@ export function generateDataFromSchema(schema: DataTypeSchema, allSchemas?: Sche
     const result: any = {};
     const currentContext: GenerationContext = { ...context };
 
+    // Auto-determine country for new customer records (70% BD, 30% US)
+    if (!currentContext.country) {
+        const isNewCustomer = schema.fields.some(f => f.type === 'customerId');
+        if (isNewCustomer) {
+            currentContext.country = determineCountry();
+        }
+    }
+
+    // Pre-select customer for schemas that use pool data (e.g. sanction)
+    if (!currentContext.country && !currentContext.customerId) {
+        const usesPoolData = schema.fields.some(f =>
+            ['customerNameFromPool', 'customerDobFromPool', 'customerNationalityFromPool'].includes(f.type)
+        );
+        if (usesPoolData && customerPool.size > 0) {
+            const customer = getRandomCustomerFromPool();
+            if (customer) {
+                currentContext.selectedCustomer = customer;
+                currentContext.country = customer.country;
+            }
+        }
+    }
+
     for (const field of schema.fields) {
         try {
             result[field.name] = generateFieldValue(field, allSchemas, currentContext);
@@ -172,6 +392,13 @@ export function generateDataFromSchema(schema: DataTypeSchema, allSchemas?: Sche
         // Update context as we generate fields so nested objects can use parent IDs
         if (field.name === 'customerId' && result.customerId) {
             currentContext.customerId = result.customerId;
+            // If this is a customerIdRef, look up the customer's country from pool
+            if (field.type === 'customerIdRef') {
+                const poolCustomer = customerPool.get(result.customerId);
+                if (poolCustomer?.country) {
+                    currentContext.country = poolCustomer.country;
+                }
+            }
         }
         if (field.name === 'accountNumber' && result.accountNumber) {
             currentContext.accountNumber = result.accountNumber;
@@ -274,6 +501,33 @@ function applyFuzzyName(name: string): string {
     return faker.helpers.arrayElement(operations)();
 }
 
+/**
+ * Generate an array of integer percentages (1–100) that sum to exactly 100.
+ * Each value is returned as a string, e.g. ["50", "30", "20"].
+ */
+function generateSharePercentages(count: number): string[] {
+    if (count === 1) return ['100'];
+    // Generate (count - 1) random cut points in [1, 99], then derive segments
+    const cuts: number[] = [];
+    const usedCuts = new Set<number>();
+    while (cuts.length < count - 1) {
+        const cut = faker.number.int({ min: 1, max: 99 });
+        if (!usedCuts.has(cut)) {
+            usedCuts.add(cut);
+            cuts.push(cut);
+        }
+    }
+    cuts.sort((a, b) => a - b);
+    const percentages: number[] = [];
+    let prev = 0;
+    for (const cut of cuts) {
+        percentages.push(cut - prev);
+        prev = cut;
+    }
+    percentages.push(100 - prev);
+    return percentages.map(p => String(p));
+}
+
 function applyPartialDob(dob: string): string {
     const date = new Date(dob);
     const yearsOffset = faker.number.int({ min: -2, max: 2 });
@@ -282,10 +536,10 @@ function applyPartialDob(dob: string): string {
 }
 
 // Get customer name from pool with matching strategy (exact/partial/fuzzy)
-function getCustomerNameFromPool(): string {
-    const customer = getRandomCustomerFromPool();
+function getCustomerNameFromPool(selectedCustomer?: CustomerPoolData | null): string {
+    const customer = selectedCustomer || getRandomCustomerFromPool();
     if (!customer || !customer.customerNameEng) {
-        return faker.person.fullName();
+        return generateBDFullName(); // fallback to BD name since 70% are BD
     }
 
     const matchType = faker.number.int({ min: 1, max: 10 });
@@ -302,8 +556,8 @@ function getCustomerNameFromPool(): string {
 }
 
 // Get customer DOB from pool with matching strategy
-function getCustomerDobFromPool(): string {
-    const customer = getRandomCustomerFromPool();
+function getCustomerDobFromPool(selectedCustomer?: CustomerPoolData | null): string {
+    const customer = selectedCustomer || getRandomCustomerFromPool();
     if (!customer || !customer.dateOfBirth) {
         return faker.date.past().toISOString().split('T')[0];
     }
@@ -322,10 +576,10 @@ function getCustomerDobFromPool(): string {
 }
 
 // Get customer nationality from pool
-function getCustomerNationalityFromPool(): string {
-    const customer = getRandomCustomerFromPool();
+function getCustomerNationalityFromPool(selectedCustomer?: CustomerPoolData | null, country?: 'BD' | 'US'): string {
+    const customer = selectedCustomer || getRandomCustomerFromPool();
     if (!customer || !customer.nationality) {
-        return faker.location.country();
+        return generateLocaleCountry(country);
     }
 
     const matchType = faker.number.int({ min: 1, max: 10 });
@@ -334,7 +588,7 @@ function getCustomerNationalityFromPool(): string {
         return customer.nationality;
     } else {
         // 40% different
-        return faker.location.country();
+        return generateLocaleCountry(country);
     }
 }
 
@@ -390,11 +644,11 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
                 throw error; // Re-throw so it's visible
             }
         case 'customerNameFromPool':
-            return getCustomerNameFromPool();
+            return getCustomerNameFromPool(context?.selectedCustomer);
         case 'customerDobFromPool':
-            return getCustomerDobFromPool();
+            return getCustomerDobFromPool(context?.selectedCustomer);
         case 'customerNationalityFromPool':
-            return getCustomerNationalityFromPool();
+            return getCustomerNationalityFromPool(context?.selectedCustomer, context?.country);
         case 'uuid':
             return faker.string.uuid();
         case 'string':
@@ -404,9 +658,9 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
         case 'boolean':
             return faker.datatype.boolean();
         case 'email':
-            return faker.internet.email();
+            return faker.internet.email().replace(/[^a-zA-Z0-9@.]/g, '').toLowerCase();
         case 'phone':
-            return faker.phone.number();
+            return generateLocalePhone(context?.country);
         case 'date':
             return faker.date.past().toISOString().split('T')[0];
         case 'datetime':
@@ -414,25 +668,25 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
         case 'dateOrNull':
             return faker.datatype.boolean() ? faker.date.recent().toISOString().split('T')[0] : null;
         case 'address':
-            return faker.location.streetAddress();
+            return generateLocaleAddress(context?.country, field.name);
         case 'streetAddress':
-            return faker.location.streetAddress();
+            return generateLocaleAddress(context?.country, field.name);
         case 'city':
-            return faker.location.city();
+            return generateLocaleCity(context?.country);
         case 'country':
-            return faker.location.country();
+            return generateLocaleCountry(context?.country);
         case 'countryCode':
-            return faker.location.countryCode('alpha-2');
+            return generateLocaleCountryCode(context?.country);
         case 'currency':
             return faker.finance.amount();
         case 'currencyCode':
             return faker.finance.currencyCode();
         case 'firstName':
-            return faker.person.firstName();
+            return generateLocaleFirstName(context?.country);
         case 'lastName':
-            return faker.person.lastName();
+            return generateLocaleLastName(context?.country);
         case 'fullName':
-            return faker.person.fullName();
+            return generateLocaleFullName(context?.country, field.name);
         case 'companyName':
             return faker.company.name();
         case 'sentence':
@@ -470,6 +724,8 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
             const ports = ['Shanghai', 'Singapore', 'Rotterdam', 'Antwerp', 'Hamburg', 'Los Angeles', 'Chittagong', 'Dubai', 'Hong Kong', 'Busan', 'Mumbai', 'Colombo', 'Felixstowe', 'Jeddah', 'Yokohama'];
             return faker.helpers.arrayElement(ports);
         }
+        case 'bankName':
+            return generateLocaleBankName(context?.country);
         case 'futureDate':
             return faker.date.future({ years: 1 }).toISOString().split('T')[0];
         case 'word':
@@ -493,13 +749,23 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
             return Array.from({ length: stringCount }, () => faker.lorem.word());
         case 'arrayOfCountries':
             const countryCount = field.count || 2;
+            if (context?.country) {
+                const mainCountry = generateLocaleCountry(context.country);
+                const others = Array.from({ length: countryCount - 1 }, () => faker.location.country());
+                return [mainCountry, ...others];
+            }
             return Array.from({ length: countryCount }, () => faker.location.country());
         case 'arrayOfCountryCodes':
             const codeCount = field.count || 2;
+            if (context?.country) {
+                const mainCode = generateLocaleCountryCode(context.country);
+                const otherCodes = Array.from({ length: codeCount - 1 }, () => faker.location.countryCode('alpha-2'));
+                return [mainCode, ...otherCodes];
+            }
             return Array.from({ length: codeCount }, () => faker.location.countryCode('alpha-2'));
         case 'arrayOfNames':
             const nameCount = field.count || 3;
-            return Array.from({ length: nameCount }, () => faker.person.fullName());
+            return Array.from({ length: nameCount }, () => generateLocaleFullName(context?.country));
         case 'nestedObject':
             // Generate a nested object from a schema
             if (field.schema && allSchemas) {
@@ -517,9 +783,19 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
                     const minCount = field.minCount || 1;
                     const maxCount = field.maxCount || 3;
                     const count = faker.number.int({ min: minCount, max: maxCount });
-                    return Array.from({ length: count }, () =>
+                    const items = Array.from({ length: count }, () =>
                         generateDataFromSchema(nestedSchema, allSchemas, context)
                     );
+                    // Ensure nominee share percentages sum to 100
+                    if (field.schema === 'nominee' && items.length > 0) {
+                        const shares = generateSharePercentages(items.length);
+                        items.forEach((item: any, idx: number) => {
+                            if ('nomineeSharePercentage' in item) {
+                                item.nomineeSharePercentage = shares[idx];
+                            }
+                        });
+                    }
+                    return items;
                 }
             }
             return [];
@@ -581,6 +857,7 @@ export const AVAILABLE_FIELD_TYPES = [
     'percentage',
     'hsCode',
     'port',
+    'bankName',
     'futureDate',
     'nestedObject',
     'nestedArray',

@@ -31,7 +31,8 @@ export async function middleware(request: NextRequest) {
     if (
         pathname.startsWith(API_PREFIX) &&
         !pathname.startsWith('/api/config') &&
-        !pathname.startsWith('/api/webhook/send')
+        !pathname.startsWith('/api/webhook/send') &&
+        !pathname.startsWith('/api/webhook/preview')
     ) {
         return NextResponse.next();
     }

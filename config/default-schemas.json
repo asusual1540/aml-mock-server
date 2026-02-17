@@ -1268,7 +1268,7 @@
             },
             {
                 "name": "otherBankName",
-                "type": "companyName"
+                "type": "bankName"
             },
             {
                 "name": "otherBankBranch",
@@ -2351,6 +2351,278 @@
             },
             {
                 "name": "discrepancyNotes",
+                "type": "sentence"
+            }
+        ]
+    },
+    "credit": {
+        "fields": [
+            {
+                "name": "loanNumber",
+                "type": "string"
+            },
+            {
+                "name": "loanType",
+                "type": "select",
+                "options": [
+                    "PERSONAL",
+                    "MORTGAGE",
+                    "BUSINESS",
+                    "OVERDRAFT",
+                    "CREDIT_CARD",
+                    "TRADE_FINANCE",
+                    "AGRICULTURAL",
+                    "VEHICLE"
+                ]
+            },
+            {
+                "name": "loanSubType",
+                "type": "select",
+                "options": [
+                    "SECURED",
+                    "UNSECURED",
+                    "REVOLVING",
+                    "TERM",
+                    "DEMAND"
+                ]
+            },
+            {
+                "name": "productCode",
+                "type": "string"
+            },
+            {
+                "name": "status",
+                "type": "select",
+                "options": [
+                    "ACTIVE",
+                    "CLOSED",
+                    "DEFAULTED",
+                    "WRITTEN_OFF",
+                    "RESTRUCTURED"
+                ]
+            },
+            {
+                "name": "accountNumber",
+                "type": "accountNumber"
+            },
+            {
+                "name": "customerName",
+                "type": "fullName"
+            },
+            {
+                "name": "customerType",
+                "type": "select",
+                "options": [
+                    "INDIVIDUAL",
+                    "CORPORATE"
+                ]
+            },
+            {
+                "name": "currency",
+                "type": "select",
+                "options": [
+                    "BDT",
+                    "USD",
+                    "EUR",
+                    "GBP"
+                ]
+            },
+            {
+                "name": "sanctionedAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "disbursedAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "outstandingAmount",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "interestRate",
+                "type": "percentage"
+            },
+            {
+                "name": "tenureMonths",
+                "type": "number"
+            },
+            {
+                "name": "disbursementDate",
+                "type": "date"
+            },
+            {
+                "name": "maturityDate",
+                "type": "futureDate"
+            },
+            {
+                "name": "lastPaymentDate",
+                "type": "date"
+            },
+            {
+                "name": "collateralType",
+                "type": "select",
+                "options": [
+                    "PROPERTY",
+                    "FDR",
+                    "GOLD",
+                    "STOCKS",
+                    "VEHICLE",
+                    "NONE"
+                ]
+            },
+            {
+                "name": "collateralValue",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "ltv",
+                "type": "percentage"
+            },
+            {
+                "name": "riskRating",
+                "type": "select",
+                "options": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH",
+                    "CRITICAL"
+                ]
+            },
+            {
+                "name": "npaClassification",
+                "type": "select",
+                "options": [
+                    "STANDARD",
+                    "SUB_STANDARD",
+                    "DOUBTFUL",
+                    "LOSS"
+                ]
+            },
+            {
+                "name": "daysOverdue",
+                "type": "number"
+            },
+            {
+                "name": "restructuredFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "thirdPartyRepaymentFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "earlySettlementFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "unusualCollateralFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "crossBorderFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "rapidDisbursementFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "frequentRestructuringFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "mismatchPurposeFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "declaredPurpose",
+                "type": "sentence"
+            },
+            {
+                "name": "sectorCode",
+                "type": "string"
+            },
+            {
+                "name": "subSectorCode",
+                "type": "string"
+            },
+            {
+                "name": "repayments",
+                "type": "nestedArray",
+                "schema": "loanRepayment",
+                "minCount": 0,
+                "maxCount": 5
+            }
+        ]
+    },
+    "loanRepayment": {
+        "fields": [
+            {
+                "name": "repaymentNumber",
+                "type": "number"
+            },
+            {
+                "name": "dueDate",
+                "type": "date"
+            },
+            {
+                "name": "paymentDate",
+                "type": "date"
+            },
+            {
+                "name": "amountDue",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "amountPaid",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "principalPortion",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "interestPortion",
+                "type": "tradeAmount"
+            },
+            {
+                "name": "penaltyAmount",
+                "type": "number"
+            },
+            {
+                "name": "paymentMethod",
+                "type": "select",
+                "options": [
+                    "AUTO_DEBIT",
+                    "CASH",
+                    "CHEQUE",
+                    "TRANSFER",
+                    "THIRD_PARTY"
+                ]
+            },
+            {
+                "name": "payerName",
+                "type": "fullName"
+            },
+            {
+                "name": "payerAccountNumber",
+                "type": "accountNumber"
+            },
+            {
+                "name": "thirdPartyFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "latePaymentFlag",
+                "type": "boolean"
+            },
+            {
+                "name": "daysLate",
+                "type": "number"
+            },
+            {
+                "name": "notes",
                 "type": "sentence"
             }
         ]

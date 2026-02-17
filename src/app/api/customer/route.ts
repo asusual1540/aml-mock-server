@@ -47,12 +47,16 @@ export async function GET(request: NextRequest) {
                 throw new Error(`Invalid customerId: ${customer.customerId}. Customer schema may be misconfigured.`);
             }
 
+            // Determine country from nationality (set by locale-aware generation)
+            const country: 'BD' | 'US' = customer.nationality === 'Bangladesh' ? 'BD' : 'US';
+
             return {
                 customerId,
                 customerNameEng: customer.customerNameEng,
                 customerNameBen: customer.customerNameBen,
                 dateOfBirth: customer.dob,
                 nationality: customer.nationality,
+                country,
             };
         });
         addCustomersToPool(customers);

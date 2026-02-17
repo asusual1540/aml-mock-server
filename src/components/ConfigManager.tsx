@@ -22,7 +22,7 @@ interface DataTypeSchema {
 // Dynamic schemas — main types + any nested schemas
 type Schemas = Record<string, DataTypeSchema>;
 
-const MAIN_DATA_TYPES = ['customer', 'account', 'transaction', 'sanction', 'trade'];
+const MAIN_DATA_TYPES = ['customer', 'account', 'transaction', 'sanction', 'trade', 'credit'];
 
 const MAIN_TYPE_META: Record<string, { label: string; icon: string; activeGradient: string }> = {
     customer: { label: 'Customer', icon: '👤', activeGradient: 'from-blue-500 to-blue-600' },
@@ -30,6 +30,7 @@ const MAIN_TYPE_META: Record<string, { label: string; icon: string; activeGradie
     transaction: { label: 'Transaction', icon: '💸', activeGradient: 'from-emerald-500 to-emerald-600' },
     sanction: { label: 'Sanction', icon: '🛡️', activeGradient: 'from-purple-500 to-purple-600' },
     trade: { label: 'Trade (LC)', icon: '📋', activeGradient: 'from-rose-500 to-rose-600' },
+    credit: { label: 'Credit (Loans)', icon: '🏦', activeGradient: 'from-amber-500 to-amber-600' },
 };
 
 export default function ConfigManager() {
