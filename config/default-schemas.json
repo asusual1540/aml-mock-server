@@ -2358,6 +2358,10 @@
     "credit": {
         "fields": [
             {
+                "name": "customerId",
+                "type": "customerIdRef"
+            },
+            {
                 "name": "loanNumber",
                 "type": "string"
             },
