@@ -1,2 +1,6 @@
 # User schemas - modified configurations
 schemas.json
+account-id-pool.json
+customer-id-pool.json
+webhook-configs.json
+

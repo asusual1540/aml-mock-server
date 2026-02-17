@@ -91,7 +91,7 @@ const US_BANK_NAMES = [
 // ═══════════════════════════════════════════════════════════════════
 
 function determineCountry(): 'BD' | 'US' {
-    return Math.random() < 0.7 ? 'BD' : 'US';
+    return Math.random() < 0.85 ? 'BD' : 'US';
 }
 
 function generateBDFullName(): string {
