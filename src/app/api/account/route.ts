@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { logRequest } from '@/lib/logger';
-import { getSchemas, generateDataFromSchema, isCustomerIdPoolEmpty, addAccountsToPool } from '@/lib/schema-manager';
+import { isCustomerIdPoolEmpty, addAccountsToPool, getRandomCustomerFromPool } from '@/lib/schema-manager';
+import { generateAccountData, AccountProductType } from '@/lib/generators';
+
+const VALID_ACCOUNT_TYPES: AccountProductType[] = [
+    'SAVINGS', 'CURRENT', 'LOAN', 'CARD', 'MFS', 'DEPOSIT', 'CORPORATE_ACCOUNT', 'CAMPAIGN',
+];
 
 export async function GET(request: NextRequest) {
     // Validate ACCESS_TOKEN
     const token = request.headers.get('authorization')?.replace('Bearer ', '') || request.nextUrl.searchParams.get('token');
-    console.log("Received token:", token);
-    console.log("Expected token:", process.env.ACCESS_TOKEN);
     if (!token || token !== process.env.ACCESS_TOKEN) {
         return NextResponse.json(
             { error: 'Unauthorized: Invalid or missing access token' },
@@ -14,7 +17,6 @@ export async function GET(request: NextRequest) {
         );
     }
 
-    // Log the request
     await logRequest(request);
 
     try {
@@ -22,10 +24,13 @@ export async function GET(request: NextRequest) {
         const amountParam = searchParams.get('amount');
         const amount = amountParam ? parseInt(amountParam, 10) : 1;
 
-        // Validate amount
+        // Optional: force a specific account product type
+        const typeParam = searchParams.get('type')?.toUpperCase() as AccountProductType | undefined;
+        const forceAccountType = typeParam && VALID_ACCOUNT_TYPES.includes(typeParam) ? typeParam : undefined;
+
         if (isNaN(amount) || amount < 1) {
             return NextResponse.json(
-                { error: 'Invalid amount parameter' },
+                { error: 'Invalid amount parameter. Must be >= 1' },
                 { status: 400 }
             );
         }
@@ -38,28 +43,25 @@ export async function GET(request: NextRequest) {
             );
         }
 
-        const schemas = getSchemas();
-
-        // Debug: Log the account schema fields to verify customerId field exists
-        const accountFields = schemas.account.fields.map(f => `${f.name}:${f.type}`);
-        console.log('Account schema fields:', accountFields);
-        const customerIdField = schemas.account.fields.find(f => f.name === 'customerId');
-        console.log('customerId field:', customerIdField);
-
-        const data = amount === 1
-            ? generateDataFromSchema(schemas.account, schemas)
-            : Array.from({ length: amount }, () => generateDataFromSchema(schemas.account, schemas));
+        // Generate account data using dedicated product generators
+        const records = Array.from({ length: amount }, () => {
+            const customer = getRandomCustomerFromPool();
+            const customerId = customer?.customerId ?? 100000;
+            return generateAccountData(customerId, forceAccountType);
+        });
+        const data = amount === 1 ? records[0] : records;
 
         // Add generated account IDs to the pool
-        const accounts = Array.isArray(data) ? data : [data];
-        const accountIds = accounts
+        const accountIds = records
             .map(acc => acc.uniqueAccountNumber)
             .filter((id): id is string => typeof id === 'string' && id.length > 0);
 
         if (accountIds.length > 0) {
             addAccountsToPool(accountIds);
-            console.log(`Added ${accountIds.length} accounts to pool`);
+            console.log(`[ACCOUNT API] Added ${accountIds.length} accounts to pool`);
         }
+
+        console.log(`[ACCOUNT API] Generated ${amount} account(s), type=${forceAccountType || 'MIXED'}`);
 
         return NextResponse.json(data);
     } catch (error) {

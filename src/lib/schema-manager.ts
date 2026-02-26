@@ -286,6 +286,8 @@ export interface GenerationContext {
     accountNumber?: string;
     country?: 'BD' | 'US';
     selectedCustomer?: CustomerPoolData;
+    /** Force customer type to INDIVIDUAL, CORPORATE, or JOINT */
+    forceCustomerType?: 'INDIVIDUAL' | 'CORPORATE' | 'JOINT';
 }
 
 export interface DataTypeSchema {
@@ -482,7 +484,7 @@ function getRandomCustomerIdFromPool(): number {
 }
 
 // Helper function to get a random customer from pool
-function getRandomCustomerFromPool(): CustomerPoolData | null {
+export function getRandomCustomerFromPool(): CustomerPoolData | null {
     if (customerPool.size === 0) {
         return null;
     }
@@ -686,6 +688,21 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
         case 'lastName':
             return generateLocaleLastName(context?.country);
         case 'fullName':
+            // For corporate customers, generate company names instead of person names
+            if (context?.forceCustomerType === 'CORPORATE' && (field.name === 'customerNameEng' || field.name === 'customerNameBen')) {
+                if (field.name === 'customerNameBen') {
+                    // Generate a Bengali company name
+                    const bdCompanies = [
+                        'বাংলাদেশ ট্রেডিং কর্পোরেশন', 'ঢাকা এন্টারপ্রাইজ লিমিটেড', 'চট্টগ্রাম শিপিং কোম্পানি',
+                        'পদ্মা ইন্ডাস্ট্রিজ লিমিটেড', 'মেঘনা গ্রুপ অব ইন্ডাস্ট্রিজ', 'যমুনা ফিউচার পার্ক',
+                        'বসুন্ধরা গ্রুপ', 'স্কয়ার গ্রুপ', 'বিকন ফার্মাসিউটিক্যালস', 'ট্রান্সকম ইলেকট্রনিক্স'
+                    ];
+                    return faker.helpers.arrayElement(bdCompanies);
+                }
+                // English company name
+                const companyTypes = ['Ltd', 'Pvt Ltd', 'Corporation', 'Industries', 'Group', 'Holdings', 'Enterprises', 'Trading Co'];
+                return `${faker.company.name()} ${faker.helpers.arrayElement(companyTypes)}`;
+            }
             return generateLocaleFullName(context?.country, field.name);
         case 'companyName':
             return faker.company.name();
@@ -734,6 +751,10 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
             return faker.person.jobTitle();
         case 'select':
             if (field.options && field.options.length > 0) {
+                // If this is the customerType field and we have a forced type, use it
+                if (field.name === 'customerType' && context?.forceCustomerType) {
+                    return context.forceCustomerType;
+                }
                 return faker.helpers.arrayElement(field.options);
             }
             return null;

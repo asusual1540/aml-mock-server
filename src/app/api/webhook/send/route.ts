@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSchemas, generateDataFromSchema, addCustomersToPool, isCustomerIdPoolEmpty, getCustomerIdPoolSize, addAccountsToPool, CustomerPoolData } from '@/lib/schema-manager';
+import { getSchemas, generateDataFromSchema, addCustomersToPool, isCustomerIdPoolEmpty, getCustomerIdPoolSize, addAccountsToPool, CustomerPoolData, GenerationContext, getRandomCustomerFromPool } from '@/lib/schema-manager';
+import { generateCustomerData, CustomerType, generateAccountData, AccountProductType } from '@/lib/generators';
+
+const VALID_CUSTOMER_TYPES: CustomerType[] = ['INDIVIDUAL', 'CORPORATE', 'GOVERNMENT', 'NPO', 'JOINT'];
+const VALID_ACCOUNT_TYPES: AccountProductType[] = ['SAVINGS', 'CURRENT', 'LOAN', 'CARD', 'MFS', 'DEPOSIT', 'CORPORATE_ACCOUNT', 'CAMPAIGN'];
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { webhookUrl, token, dataType, amount, customData } = body;
+        const { webhookUrl, token, dataType, amount, customData, customerType, accountType } = body;
 
-        console.log('[WEBHOOK] Received request with body:', { webhookUrl, token, dataType, amount, hasCustomData: !!customData });
+        console.log('[WEBHOOK] Received request:', { webhookUrl, token, dataType, amount, hasCustomData: !!customData, customerType, accountType });
 
         // Validation
         if (!webhookUrl || !token || !dataType) {
@@ -31,74 +35,69 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check if trying to generate transactions, accounts, or sanctions without customers
-        if ((dataType === 'transaction' || dataType === 'account' || dataType === 'sanction') && isCustomerIdPoolEmpty()) {
-            return NextResponse.json(
-                { error: 'No customers available. Please generate customers first.' },
-                { status: 400 }
-            );
-        }
-
         // Log customer pool status
         console.log(`[WEBHOOK] Generating ${dataType}, Customer pool size:`, getCustomerIdPoolSize());
 
         // Generate data
-        const schemas = getSchemas();
-
-        // Debug logging for account generation
-        if (dataType === 'account') {
-            const accountFields = schemas.account.fields.map(f => `${f.name}:${f.type}`);
-            console.log('[WEBHOOK] Account schema fields:', accountFields);
-            const customerIdField = schemas.account.fields.find(f => f.name === 'customerId');
-            console.log('[WEBHOOK] customerId field config:', customerIdField);
-        }
-
-        // Use customData if provided (from View Data editor), otherwise generate
         let data: any;
+
         if (customData !== undefined && customData !== null) {
             data = customData;
             console.log('[WEBHOOK] Using custom data provided by user');
+        } else if (dataType === 'customer') {
+            // Use dedicated customer profile generators
+            const forceType = customerType && VALID_CUSTOMER_TYPES.includes(customerType.toUpperCase())
+                ? customerType.toUpperCase() as CustomerType : undefined;
+            const records = Array.from({ length: amountNum }, () => generateCustomerData(forceType));
+            data = amountNum === 1 ? records[0] : records;
+        } else if (dataType === 'account') {
+            // Use dedicated account product generators
+            if (isCustomerIdPoolEmpty()) {
+                return NextResponse.json({ error: 'No customers available. Please generate customers first.' }, { status: 400 });
+            }
+            const forceAcct = accountType && VALID_ACCOUNT_TYPES.includes(accountType.toUpperCase())
+                ? accountType.toUpperCase() as AccountProductType : undefined;
+            const records = Array.from({ length: amountNum }, () => {
+                const cust = getRandomCustomerFromPool();
+                return generateAccountData(cust?.customerId ?? 100000, forceAcct);
+            });
+            data = amountNum === 1 ? records[0] : records;
         } else {
+            // transaction, sanction, trade, credit — use schema-based generation
+            if (['transaction', 'sanction'].includes(dataType) && isCustomerIdPoolEmpty()) {
+                return NextResponse.json({ error: 'No customers available. Please generate customers first.' }, { status: 400 });
+            }
+            const schemas = getSchemas();
             const schema = schemas[dataType as keyof typeof schemas];
             if (!schema) {
                 return NextResponse.json({ error: `No schema found for data type: ${dataType}` }, { status: 400 });
             }
-
             data = amountNum === 1
-                ? generateDataFromSchema(schema, schemas)
-                : Array.from({ length: amountNum }, () =>
-                    generateDataFromSchema(schema, schemas)
-                );
+                ? generateDataFromSchema(schema, schemas, {})
+                : Array.from({ length: amountNum }, () => generateDataFromSchema(schema, schemas, {}));
         }
 
-        // Debug: Log generated data structure
-        if (dataType === 'account') {
-            const firstRecord = Array.isArray(data) ? data[0] : data;
-            console.log('[WEBHOOK] Generated account data has customerId:', 'customerId' in firstRecord, 'value:', firstRecord.customerId);
-        }
-
-        // If customers were generated, add them to the pool with full data
+        // If customers were generated, add them to the pool
         if (dataType === 'customer') {
-            const customers: CustomerPoolData[] = (Array.isArray(data) ? data : [data]).map(customer => {
-                // Ensure customerId is a number, not a string
+            const records = Array.isArray(data) ? data : [data];
+            const customers: CustomerPoolData[] = records.map(customer => {
                 const customerId = typeof customer.customerId === 'number'
                     ? customer.customerId
                     : parseInt(customer.customerId, 10);
 
                 if (isNaN(customerId)) {
-                    console.error('[WEBHOOK] Invalid customerId generated:', customer.customerId, 'Type:', typeof customer.customerId);
-                    throw new Error(`Invalid customerId: ${customer.customerId}. Customer schema may be misconfigured.`);
+                    console.error('[WEBHOOK] Invalid customerId:', customer.customerId);
+                    throw new Error(`Invalid customerId: ${customer.customerId}`);
                 }
 
                 return {
                     customerId,
                     customerNameEng: customer.customerNameEng,
-                    customerNameBen: customer.customerNameBen,
-                    dateOfBirth: customer.dob,
+                    customerNameBen: customer.customerNameBen || '',
+                    dateOfBirth: customer['individual.dob'] || '',
                     nationality: customer.nationality,
                 };
             });
-            console.log('[WEBHOOK] Adding customers to pool:', customers.map(c => ({ id: c.customerId, type: typeof c.customerId })));
             addCustomersToPool(customers);
             console.log('[WEBHOOK] Customer pool size after adding:', getCustomerIdPoolSize());
         }

@@ -64,6 +64,8 @@ export default function WebhookCaller() {
     const [token, setToken] = useState('');
     const [dataType, setDataType] = useState<'customer' | 'account' | 'transaction' | 'sanction' | 'trade' | 'credit'>('customer');
     const [amount, setAmount] = useState(1);
+    const [customerTypeFilter, setCustomerTypeFilter] = useState<'' | 'INDIVIDUAL' | 'CORPORATE' | 'GOVERNMENT' | 'NPO' | 'JOINT'>('');
+    const [accountTypeFilter, setAccountTypeFilter] = useState<'' | 'SAVINGS' | 'CURRENT' | 'LOAN' | 'CARD' | 'MFS' | 'DEPOSIT' | 'CORPORATE_ACCOUNT' | 'CAMPAIGN'>('');
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState<WebhookResponse | null>(null);
     const [previewData, setPreviewData] = useState<any>(null);
@@ -353,7 +355,12 @@ export default function WebhookCaller() {
             const res = await fetch('/api/webhook/preview', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ dataType, amount }),
+                body: JSON.stringify({
+                    dataType,
+                    amount,
+                    ...(dataType === 'customer' && customerTypeFilter ? { customerType: customerTypeFilter } : {}),
+                    ...(dataType === 'account' && accountTypeFilter ? { accountType: accountTypeFilter } : {}),
+                }),
             });
 
             if (res.status === 401) { router.replace('/login'); return; }
@@ -402,6 +409,8 @@ export default function WebhookCaller() {
                     token,
                     dataType,
                     amount,
+                    ...(dataType === 'customer' && customerTypeFilter ? { customerType: customerTypeFilter } : {}),
+                    ...(dataType === 'account' && accountTypeFilter ? { accountType: accountTypeFilter } : {}),
                 }),
             });
 
@@ -666,7 +675,11 @@ export default function WebhookCaller() {
                                     </label>
                                     <select
                                         value={dataType}
-                                        onChange={(e) => setDataType(e.target.value as any)}
+                                        onChange={(e) => {
+                                            setDataType(e.target.value as any);
+                                            if (e.target.value !== 'customer') setCustomerTypeFilter('');
+                                            if (e.target.value !== 'account') setAccountTypeFilter('');
+                                        }}
                                         className="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-slate-900 font-medium cursor-pointer"
                                     >
                                         <option value="customer" className="text-slate-900 bg-white">Customer</option>
@@ -692,6 +705,79 @@ export default function WebhookCaller() {
                                     />
                                 </div>
                             </div>
+
+                            {/* Customer Type Selector — shown only when dataType is 'customer' */}
+                            {dataType === 'customer' && (
+                                <div>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                        Customer Profile Type
+                                    </label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {[
+                                            { value: '', label: 'Mixed (Random)' },
+                                            { value: 'INDIVIDUAL', label: 'Individual' },
+                                            { value: 'CORPORATE', label: 'Corporate' },
+                                            { value: 'GOVERNMENT', label: 'Government' },
+                                            { value: 'NPO', label: 'NPO / NGO' },
+                                            { value: 'JOINT', label: 'Joint' },
+                                        ].map((opt) => (
+                                            <button
+                                                key={opt.value}
+                                                onClick={() => setCustomerTypeFilter(opt.value as any)}
+                                                className={`px-4 py-2 rounded-lg text-sm font-medium border-2 transition-all ${customerTypeFilter === opt.value
+                                                    ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
+                                                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'
+                                                    }`}
+                                            >
+                                                {opt.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <p className="text-xs text-slate-500 mt-1">
+                                        {customerTypeFilter
+                                            ? `All generated customers will be ${customerTypeFilter}`
+                                            : 'Generates a weighted mix of Individual (55%), Corporate (20%), NPO (10%), Joint (10%), Government (5%)'}
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Account Product Type Selector — shown only when dataType is 'account' */}
+                            {dataType === 'account' && (
+                                <div>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                        Account Product Type
+                                    </label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {[
+                                            { value: '', label: 'Mixed (Random)' },
+                                            { value: 'SAVINGS', label: 'Savings' },
+                                            { value: 'CURRENT', label: 'Current' },
+                                            { value: 'LOAN', label: 'Loan' },
+                                            { value: 'CARD', label: 'Card' },
+                                            { value: 'MFS', label: 'MFS' },
+                                            { value: 'DEPOSIT', label: 'Deposit (FDR/RD)' },
+                                            { value: 'CORPORATE_ACCOUNT', label: 'Corporate' },
+                                            { value: 'CAMPAIGN', label: 'Campaign' },
+                                        ].map((opt) => (
+                                            <button
+                                                key={opt.value}
+                                                onClick={() => setAccountTypeFilter(opt.value as any)}
+                                                className={`px-4 py-2 rounded-lg text-sm font-medium border-2 transition-all ${accountTypeFilter === opt.value
+                                                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm'
+                                                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'
+                                                    }`}
+                                            >
+                                                {opt.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <p className="text-xs text-slate-500 mt-1">
+                                        {accountTypeFilter
+                                            ? `All generated accounts will be ${accountTypeFilter.replace('_', ' ')}`
+                                            : 'Generates a weighted mix: Savings (30%), Current (20%), Loan (15%), Card (12%), MFS (8%), Deposit (8%), Corporate (5%), Campaign (2%)'}
+                                    </p>
+                                </div>
+                            )}
 
                             {/* Action Buttons */}
                             <div className="flex gap-3">
