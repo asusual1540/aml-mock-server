@@ -368,11 +368,11 @@
             },
             {
                 "name": "branchCode",
-                "type": "string"
+                "type": "branchCode"
             },
             {
                 "name": "preferredBranchCode",
-                "type": "string"
+                "type": "branchCode"
             },
             {
                 "name": "onboardingType",
@@ -612,6 +612,10 @@
             {
                 "name": "riskScore",
                 "type": "riskScore"
+            },
+            {
+                "name": "branchCode",
+                "type": "branchCode"
             }
         ]
     },
@@ -1773,6 +1777,10 @@
                 "type": "boolean"
             },
             {
+                "name": "branchCode",
+                "type": "branchCode"
+            },
+            {
                 "name": "amendments",
                 "type": "nestedArray",
                 "schema": "tradeAmendment",
@@ -2550,6 +2558,10 @@
             {
                 "name": "subSectorCode",
                 "type": "string"
+            },
+            {
+                "name": "branchCode",
+                "type": "branchCode"
             },
             {
                 "name": "repayments",

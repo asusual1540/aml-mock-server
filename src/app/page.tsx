@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import AuthGuard from '@/components/AuthGuard';
 import ConfigManager from '@/components/ConfigManager';
 import WebhookCaller from '@/components/WebhookCaller';
-import { Settings, Webhook, LogOut } from 'lucide-react';
+import StoryManager from '@/components/StoryManager';
+import { Settings, Webhook, LogOut, Clapperboard } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
 
 function HomeContent() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'config' | 'webhook'>('config');
+  const [activeTab, setActiveTab] = useState<'config' | 'webhook' | 'story'>('config');
   const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -68,6 +69,16 @@ function HomeContent() {
                 <Webhook size={16} />
                 <span className="hidden sm:inline">Webhook</span>
               </button>
+              <button
+                onClick={() => setActiveTab('story')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-semibold transition-all ${activeTab === 'story'
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-700 text-white shadow-md'
+                  : 'text-slate-600 hover:bg-slate-50'
+                  }`}
+              >
+                <Clapperboard size={16} />
+                <span className="hidden sm:inline">Story</span>
+              </button>
             </div>
 
             {/* Logout Button */}
@@ -87,6 +98,7 @@ function HomeContent() {
         <div className="transition-all duration-300">
           {activeTab === 'config' && <ConfigManager />}
           {activeTab === 'webhook' && <WebhookCaller />}
+          {activeTab === 'story' && <StoryManager />}
         </div>
       </main>
     </div>

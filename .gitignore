@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+/config/schemas.json
+/config/account-id-pool.json
+/config/customer-id-pool.json
+/config/webhook-configs.json

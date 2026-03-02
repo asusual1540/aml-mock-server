@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { faker } from '@faker-js/faker';
+import { BRANCH_POOL } from './generators';
 
 // ═══════════════════════════════════════════════════════════════════
 // Bangladeshi (BD) & US locale data for 70/30 customer split
@@ -720,6 +721,10 @@ function generateFieldValue(field: FieldDefinition, allSchemas?: Schemas, contex
             return parseFloat(faker.finance.amount({ min: 0.5, max: 2.0, dec: 4 }));
         case 'accountNumber':
             return faker.finance.accountNumber();
+        case 'branchCode':
+            return faker.helpers.arrayElement(BRANCH_POOL).branchId;
+        case 'branchName':
+            return faker.helpers.arrayElement(BRANCH_POOL).name;
         case 'lcNumber':
             return 'LC' + new Date().getFullYear() + faker.string.numeric(8);
         case 'swiftReference':

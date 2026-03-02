@@ -50,8 +50,19 @@ function pastDate(): string { return faker.date.past({ years: 5 }).toISOString()
 function futureDate(): string { return faker.date.future({ years: 5 }).toISOString().split('T')[0]; }
 function recentDate(): string { return faker.date.recent({ days: 90 }).toISOString().split('T')[0]; }
 function bankName(c: Country): string { return c === 'BD' ? pick(BD_BANKS) : pick(US_BANKS); }
-function branchCode(): string { return faker.string.numeric(4); }
 function acctNo(): string { return faker.finance.accountNumber(13); }
+
+// ─── Branch pool (5 Dhaka branches used across all mock data) ────
+export const BRANCH_POOL = [
+    { branchId: 'MGB-0183', code: 'PALTON0183', name: 'Palton Branch' },
+    { branchId: 'MGB-0002', code: 'BADDA0002', name: 'Badda Branch' },
+    { branchId: 'MGB-0016', code: 'UTTARW0016', name: 'Uttara West Branch' },
+    { branchId: 'MGB-0022', code: 'GENDAR0022', name: 'Gendaria Branch' },
+    { branchId: 'MGB-0046', code: 'KODOMT0046', name: 'Kodomtoli Branch' },
+] as const;
+
+export function pickBranch() { return pick([...BRANCH_POOL]); }
+export function branchCode(): string { return pickBranch().branchId; }
 
 // ═══════════════════════════════════════════════════════════════════
 // COMMON ACCOUNT FIELDS (shared across every account variant)
@@ -67,6 +78,7 @@ export function generateCommonAccountFields(customerId: number, accountType: str
         uniqueAccountNumber: `${branchCode()}-${acctNo()}`,
         cbsAccountId: faker.string.alphanumeric(10).toUpperCase(),
         branchCode: branchCode(),
+        branchName: pickBranch().name,
         preferredBranchCode: branchCode(),
         onboardingType: pick(['NEW', 'MIGRATION', 'CONVERSION']),
         onboardingChannel: pick(['BRANCH', 'ONLINE', 'AGENT', 'KIOSK', 'PARTNER_API']),
